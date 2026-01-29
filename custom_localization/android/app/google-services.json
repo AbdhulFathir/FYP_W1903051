@@ -1,0 +1,67 @@
+{
+  "project_info": {
+    "project_number": "85886291306",
+    "project_id": "localization-comparison",
+    "storage_bucket": "localization-comparison.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:85886291306:android:af1b17368b2e4021b92913",
+        "android_client_info": {
+          "package_name": "com.example.built_in_localization"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDT46gXTq97ZSsqya6upOhEx6ZnQjnd0YI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:85886291306:android:6753651b8706d1e3b92913",
+        "android_client_info": {
+          "package_name": "com.example.custom_localization"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDT46gXTq97ZSsqya6upOhEx6ZnQjnd0YI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:85886291306:android:a920db646f741323b92913",
+        "android_client_info": {
+          "package_name": "com.example.easy_localization"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDT46gXTq97ZSsqya6upOhEx6ZnQjnd0YI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
