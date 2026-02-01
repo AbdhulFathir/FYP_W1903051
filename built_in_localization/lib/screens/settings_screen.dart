@@ -1,3 +1,4 @@
+import 'package:built_in_localization/app_locale_scope.dart';
 import 'package:flutter/material.dart';
 import '../l10n/app_localizations.dart';
 
@@ -14,6 +15,19 @@ class _SettingsScreenState extends State<SettingsScreen> {
   bool _notificationsEnabled = true;
   bool _biometricEnabled = false;
   bool _autoSyncEnabled = true;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    // Sync selected language with current app locale when opening settings
+    final scope = AppLocaleScope.of(context);
+    final currentCode = scope?.locale?.languageCode ??
+        Localizations.localeOf(context).languageCode;
+    if (currentCode != _selectedLanguage &&
+        ['en', 'si', 'ta'].contains(currentCode)) {
+      _selectedLanguage = currentCode;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -539,10 +553,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
   }
 
   void _changeLanguage(BuildContext context, String languageCode) {
-    // Note: This is a simplified implementation. In a real app, you'd want to
-    // persist the language preference and rebuild the app with the new locale.
-    // For now, this just updates the state. The actual language change would
-    // require restarting the app or using a state management solution.
-    // You can use packages like shared_preferences to persist the language choice.
+    AppLocaleScope.of(context)?.setLocale(Locale(languageCode));
   }
 }

@@ -1,3 +1,4 @@
+import 'package:built_in_localization/app_locale_scope.dart';
 import 'package:built_in_localization/screens/home_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -20,30 +21,50 @@ Future<void> main() async {
   runApp(const MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
 
   @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  /// Current app locale. When null, MaterialApp uses the device locale.
+  Locale? _locale;
+
+  void _setLocale(Locale? locale) {
+    if (_locale == locale) return;
+    setState(() {
+      _locale = locale;
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Localization Research Project',
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
+    return AppLocaleScope(
+      locale: _locale,
+      setLocale: _setLocale,
+      child: MaterialApp(
+        title: 'Localization Research Project',
+        debugShowCheckedModeBanner: false,
+        locale: _locale,
+        theme: ThemeData(
+          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+          useMaterial3: true,
+        ),
+        localizationsDelegates: const [
+          AppLocalizations.delegate,
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+          GlobalCupertinoLocalizations.delegate,
+        ],
+        supportedLocales: const [
+          Locale('en'), // English
+          Locale('si'), // Sinhala
+          Locale('ta'), // Tamil
+        ],
+        home: const HomeScreen(),
       ),
-      localizationsDelegates: const [
-        AppLocalizations.delegate,
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
-      ],
-      supportedLocales: const [
-        Locale('en'), // English
-        Locale('si'), // Sinhala
-        Locale('ta'), // Tamil
-      ],
-      home: const HomeScreen(),
     );
   }
 }
