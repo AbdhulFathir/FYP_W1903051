@@ -15,11 +15,16 @@ class _ListScreenState extends State<ListScreen> {
   final List<Item> _items = [];
   int _itemCount = 20;
   final List<String> _categories = ['Electronics', 'Clothing', 'Books', 'Home & Garden', 'Sports'];
+  bool _initialLoadDone = false;
 
   @override
-  void initState() {
-    super.initState();
-    _loadItems();
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    // Load items here (not in initState) so we have a valid context for AppLocalizations
+    if (!_initialLoadDone) {
+      _initialLoadDone = true;
+      _loadItems();
+    }
   }
 
   void _loadItems() {
