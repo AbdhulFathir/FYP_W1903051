@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../l10n/app_localizations.dart';
 import '../models/item.dart';
 import 'detail_screen.dart';
 
@@ -14,7 +15,6 @@ class _ListScreenState extends State<ListScreen> {
   final List<Item> _items = [];
   int _itemCount = 20;
   final List<String> _categories = ['Electronics', 'Clothing', 'Books', 'Home & Garden', 'Sports'];
-  final List<String> _statuses = ['Available', 'Limited Stock', 'New Arrival', 'Best Seller'];
 
   @override
   void initState() {
@@ -23,18 +23,21 @@ class _ListScreenState extends State<ListScreen> {
   }
 
   void _loadItems() {
+    final l10n = AppLocalizations.of(context)!;
+    final statuses = [l10n.available, l10n.limitedStock, l10n.newArrival, l10n.bestSeller];
+    
     setState(() {
       for (int i = _items.length + 1; i <= _itemCount; i++) {
         final category = _categories[i % _categories.length];
-        final status = _statuses[i % _statuses.length];
+        final status = statuses[i % statuses.length];
         final price = (19.99 + (i * 5.50)).toStringAsFixed(2);
         final rating = 3.5 + (i % 3) * 0.5;
         final reviewCount = 10 + (i * 3);
         
         _items.add(Item(
           id: i,
-          title: '$category Item $i',
-          description: 'Premium quality $category item with exceptional features. This product offers outstanding value and performance. Perfect for everyday use and designed to meet your highest expectations.',
+          title: l10n.item(i),
+          description: l10n.premiumQualityDescription(category),
           category: category,
           price: double.parse(price),
           rating: rating,
@@ -56,6 +59,7 @@ class _ListScreenState extends State<ListScreen> {
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
+    final l10n = AppLocalizations.of(context)!;
     
     return Scaffold(
       body: Container(
@@ -108,13 +112,13 @@ class _ListScreenState extends State<ListScreen> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                'Product Catalog',
+                                l10n.productCatalog,
                                 style: Theme.of(context).textTheme.headlineSmall?.copyWith(
                                       fontWeight: FontWeight.bold,
                                     ),
                               ),
                               Text(
-                                '${_items.length} items available',
+                                l10n.itemsAvailable(_items.length),
                                 style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                                       color: colorScheme.onSurfaceVariant,
                                     ),
@@ -141,7 +145,7 @@ class _ListScreenState extends State<ListScreen> {
                           const SizedBox(width: 8),
                           Expanded(
                             child: Text(
-                              'Tap on any item to view detailed information, specifications, and related products.',
+                              l10n.tapItemInfo,
                               style: Theme.of(context).textTheme.bodySmall?.copyWith(
                                     color: colorScheme.onSurfaceVariant,
                                   ),
@@ -166,7 +170,7 @@ class _ListScreenState extends State<ListScreen> {
                           child: ElevatedButton.icon(
                             onPressed: _loadMore,
                             icon: const Icon(Icons.add_circle_outline),
-                            label: const Text('Load More Items'),
+                            label: Text(l10n.loadMoreItems),
                             style: ElevatedButton.styleFrom(
                               padding: const EdgeInsets.symmetric(
                                 horizontal: 32,
@@ -192,11 +196,12 @@ class _ListScreenState extends State<ListScreen> {
 
   Widget _buildItemCard(BuildContext context, Item item) {
     final colorScheme = Theme.of(context).colorScheme;
+    final l10n = AppLocalizations.of(context)!;
     final statusColors = {
-      'Available': Colors.green,
-      'Limited Stock': Colors.orange,
-      'New Arrival': Colors.blue,
-      'Best Seller': Colors.purple,
+      l10n.available: Colors.green,
+      l10n.limitedStock: Colors.orange,
+      l10n.newArrival: Colors.blue,
+      l10n.bestSeller: Colors.purple,
     };
     final statusColor = statusColors[item.status] ?? Colors.grey;
 
@@ -313,7 +318,7 @@ class _ListScreenState extends State<ListScreen> {
                         ),
                         const SizedBox(width: 8),
                         Text(
-                          '(${item.reviewCount})',
+                          l10n.reviews(item.reviewCount),
                           style: Theme.of(context).textTheme.bodySmall?.copyWith(
                                 color: colorScheme.onSurfaceVariant,
                               ),

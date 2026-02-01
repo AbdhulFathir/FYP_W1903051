@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../l10n/app_localizations.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
@@ -17,6 +18,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
+    final l10n = AppLocalizations.of(context)!;
 
     return Scaffold(
       body: Container(
@@ -57,13 +59,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'Settings',
+                            l10n.settings,
                             style: Theme.of(context).textTheme.headlineSmall?.copyWith(
                                   fontWeight: FontWeight.bold,
                                 ),
                           ),
                           Text(
-                            'Customize your app experience',
+                            l10n.customizeAppExperience,
                             style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                                   color: colorScheme.onSurfaceVariant,
                                 ),
@@ -90,7 +92,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       const SizedBox(width: 12),
                       Expanded(
                         child: Text(
-                          'Configure your application preferences. Change language, adjust display settings, manage notifications, and customize your experience.',
+                          l10n.configurePreferences,
                           style: Theme.of(context).textTheme.bodySmall?.copyWith(
                                 color: colorScheme.onSurfaceVariant,
                                 height: 1.4,
@@ -102,7 +104,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 ),
                 const SizedBox(height: 24),
                 // Language Settings
-                _buildSectionHeader(context, 'Language Settings', Icons.language_rounded),
+                _buildSectionHeader(context, l10n.languageSettings, Icons.language_rounded),
                 const SizedBox(height: 12),
                 Card(
                   elevation: 2,
@@ -123,12 +125,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
                             color: colorScheme.primary,
                           ),
                         ),
-                        title: const Text(
-                          'Select Language',
-                          style: TextStyle(fontWeight: FontWeight.bold),
+                        title: Text(
+                          l10n.selectLanguage,
+                          style: const TextStyle(fontWeight: FontWeight.bold),
                         ),
                         subtitle: Text(
-                          _getLanguageName(_selectedLanguage),
+                          _getLanguageName(_selectedLanguage, l10n),
                           style: TextStyle(
                             color: colorScheme.onSurfaceVariant,
                           ),
@@ -138,7 +140,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       RadioListTile<String>(
                         title: Row(
                           children: [
-                            const Text('English'),
+                            Text(l10n.english),
                             const SizedBox(width: 8),
                             Container(
                               padding: const EdgeInsets.symmetric(
@@ -166,13 +168,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           setState(() {
                             _selectedLanguage = value!;
                           });
+                          _changeLanguage(context, value!);
                         },
                       ),
                       const Divider(height: 1, indent: 72),
                       RadioListTile<String>(
                         title: Row(
                           children: [
-                            const Text('සිංහල'),
+                            Text(l10n.sinhala),
                             const SizedBox(width: 8),
                             Container(
                               padding: const EdgeInsets.symmetric(
@@ -200,13 +203,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           setState(() {
                             _selectedLanguage = value!;
                           });
+                          _changeLanguage(context, value!);
                         },
                       ),
                       const Divider(height: 1, indent: 72),
                       RadioListTile<String>(
                         title: Row(
                           children: [
-                            const Text('தமிழ்'),
+                            Text(l10n.tamil),
                             const SizedBox(width: 8),
                             Container(
                               padding: const EdgeInsets.symmetric(
@@ -234,6 +238,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           setState(() {
                             _selectedLanguage = value!;
                           });
+                          _changeLanguage(context, value!);
                         },
                       ),
                     ],
@@ -241,7 +246,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 ),
                 const SizedBox(height: 24),
                 // Display Settings
-                _buildSectionHeader(context, 'Display Settings', Icons.palette_rounded),
+                _buildSectionHeader(context, l10n.displaySettings, Icons.palette_rounded),
                 const SizedBox(height: 12),
                 Card(
                   elevation: 2,
@@ -262,12 +267,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
                             color: colorScheme.primary,
                           ),
                         ),
-                        title: const Text(
-                          'Theme Mode',
-                          style: TextStyle(fontWeight: FontWeight.bold),
+                        title: Text(
+                          l10n.themeMode,
+                          style: const TextStyle(fontWeight: FontWeight.bold),
                         ),
                         subtitle: Text(
-                          _getThemeName(_selectedTheme),
+                          _getThemeName(_selectedTheme, l10n),
                           style: TextStyle(
                             color: colorScheme.onSurfaceVariant,
                           ),
@@ -329,7 +334,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 ),
                 const SizedBox(height: 24),
                 // Notification Settings
-                _buildSectionHeader(context, 'Notifications', Icons.notifications_rounded),
+                _buildSectionHeader(context, l10n.notifications, Icons.notifications_rounded),
                 const SizedBox(height: 12),
                 Card(
                   elevation: 2,
@@ -350,12 +355,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
                             color: Colors.blue,
                           ),
                         ),
-                        title: const Text(
-                          'Enable Notifications',
-                          style: TextStyle(fontWeight: FontWeight.bold),
+                        title: Text(
+                          l10n.enableNotifications,
+                          style: const TextStyle(fontWeight: FontWeight.bold),
                         ),
-                        subtitle: const Text(
-                          'Receive updates about new features, important announcements, and personalized content recommendations.',
+                        subtitle: Text(
+                          l10n.notificationsDescription,
                         ),
                         value: _notificationsEnabled,
                         onChanged: (bool value) {
@@ -369,7 +374,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 ),
                 const SizedBox(height: 24),
                 // Security Settings
-                _buildSectionHeader(context, 'Security', Icons.security_rounded),
+                _buildSectionHeader(context, l10n.security, Icons.security_rounded),
                 const SizedBox(height: 12),
                 Card(
                   elevation: 2,
@@ -390,12 +395,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
                             color: Colors.green,
                           ),
                         ),
-                        title: const Text(
-                          'Biometric Authentication',
-                          style: TextStyle(fontWeight: FontWeight.bold),
+                        title: Text(
+                          l10n.biometricAuthentication,
+                          style: const TextStyle(fontWeight: FontWeight.bold),
                         ),
-                        subtitle: const Text(
-                          'Use fingerprint or face recognition to secure your app.',
+                        subtitle: Text(
+                          l10n.biometricDescription,
                         ),
                         value: _biometricEnabled,
                         onChanged: (bool value) {
@@ -409,7 +414,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 ),
                 const SizedBox(height: 24),
                 // Sync Settings
-                _buildSectionHeader(context, 'Data & Sync', Icons.sync_rounded),
+                _buildSectionHeader(context, l10n.dataSync, Icons.sync_rounded),
                 const SizedBox(height: 12),
                 Card(
                   elevation: 2,
@@ -430,12 +435,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
                             color: Colors.purple,
                           ),
                         ),
-                        title: const Text(
-                          'Auto Sync',
-                          style: TextStyle(fontWeight: FontWeight.bold),
+                        title: Text(
+                          l10n.autoSync,
+                          style: const TextStyle(fontWeight: FontWeight.bold),
                         ),
-                        subtitle: const Text(
-                          'Automatically sync your data across all devices.',
+                        subtitle: Text(
+                          l10n.autoSyncDescription,
                         ),
                         value: _autoSyncEnabled,
                         onChanged: (bool value) {
@@ -455,11 +460,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     onPressed: () {
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
-                          content: const Row(
+                          content: Row(
                             children: [
-                              Icon(Icons.check_circle, color: Colors.white),
-                              SizedBox(width: 8),
-                              Text('Settings saved successfully'),
+                              const Icon(Icons.check_circle, color: Colors.white),
+                              const SizedBox(width: 8),
+                              Text(l10n.settingsSaved),
                             ],
                           ),
                           backgroundColor: Colors.green,
@@ -471,9 +476,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       );
                     },
                     icon: const Icon(Icons.save_rounded),
-                    label: const Text(
-                      'Save Settings',
-                      style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                    label: Text(
+                      l10n.saveSettings,
+                      style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                     ),
                     style: ElevatedButton.styleFrom(
                       padding: const EdgeInsets.symmetric(vertical: 18),
@@ -507,29 +512,37 @@ class _SettingsScreenState extends State<SettingsScreen> {
     );
   }
 
-  String _getLanguageName(String code) {
+  String _getLanguageName(String code, AppLocalizations l10n) {
     switch (code) {
       case 'en':
-        return 'English';
+        return l10n.english;
       case 'si':
-        return 'සිංහල (Sinhala)';
+        return l10n.sinhala;
       case 'ta':
-        return 'தமிழ் (Tamil)';
+        return l10n.tamil;
       default:
-        return 'English';
+        return l10n.english;
     }
   }
 
-  String _getThemeName(String theme) {
+  String _getThemeName(String theme, AppLocalizations l10n) {
     switch (theme) {
       case 'light':
-        return 'Light Mode';
+        return l10n.lightMode;
       case 'dark':
-        return 'Dark Mode';
+        return l10n.darkMode;
       case 'system':
-        return 'System Default';
+        return l10n.systemDefault;
       default:
-        return 'System Default';
+        return l10n.systemDefault;
     }
+  }
+
+  void _changeLanguage(BuildContext context, String languageCode) {
+    // Note: This is a simplified implementation. In a real app, you'd want to
+    // persist the language preference and rebuild the app with the new locale.
+    // For now, this just updates the state. The actual language change would
+    // require restarting the app or using a state management solution.
+    // You can use packages like shared_preferences to persist the language choice.
   }
 }

@@ -1,0 +1,403 @@
+{
+  "@@locale": "en",
+  "appTitle": "Localization Research Project",
+  "@appTitle": {
+    "description": "The title of the application"
+  },
+  "welcomeTitle": "Welcome to Localization Research",
+  "@welcomeTitle": {
+    "description": "Welcome title on home screen"
+  },
+  "version": "Version {version}",
+  "@version": {
+    "description": "Version number",
+    "placeholders": {
+      "version": {
+        "type": "String"
+      }
+    }
+  },
+  "welcomeDescription": "This application demonstrates built-in Flutter localization using gen-l10n and ARB files. Explore different screens to experience multilingual support in action.",
+  "@welcomeDescription": {
+    "description": "Welcome description text"
+  },
+  "quickNavigation": "Quick Navigation",
+  "@quickNavigation": {
+    "description": "Quick navigation section title"
+  },
+  "itemsList": "Items List",
+  "@itemsList": {
+    "description": "Items list navigation card title"
+  },
+  "browseCollection": "Browse through our collection",
+  "@browseCollection": {
+    "description": "Items list navigation card subtitle"
+  },
+  "settings": "Settings",
+  "@settings": {
+    "description": "Settings navigation card title"
+  },
+  "customizeExperience": "Customize your experience",
+  "@customizeExperience": {
+    "description": "Settings navigation card subtitle"
+  },
+  "about": "About",
+  "@about": {
+    "description": "About navigation card title"
+  },
+  "learnMore": "Learn more about the app",
+  "@learnMore": {
+    "description": "About navigation card subtitle"
+  },
+  "languages": "Languages",
+  "@languages": {
+    "description": "Languages stat label"
+  },
+  "screens": "Screens",
+  "@screens": {
+    "description": "Screens stat label"
+  },
+  "items": "Items",
+  "@items": {
+    "description": "Items stat label"
+  },
+  "productCatalog": "Product Catalog",
+  "@productCatalog": {
+    "description": "Product catalog title"
+  },
+  "itemsAvailable": "{count} items available",
+  "@itemsAvailable": {
+    "description": "Items available count",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "tapItemInfo": "Tap on any item to view detailed information, specifications, and related products.",
+  "@tapItemInfo": {
+    "description": "Info text about tapping items"
+  },
+  "loadMoreItems": "Load More Items",
+  "@loadMoreItems": {
+    "description": "Load more items button text"
+  },
+  "reviews": "({count})",
+  "@reviews": {
+    "description": "Review count in parentheses",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "available": "Available",
+  "@available": {
+    "description": "Item status - available"
+  },
+  "limitedStock": "Limited Stock",
+  "@limitedStock": {
+    "description": "Item status - limited stock"
+  },
+  "newArrival": "New Arrival",
+  "@newArrival": {
+    "description": "Item status - new arrival"
+  },
+  "bestSeller": "Best Seller",
+  "@bestSeller": {
+    "description": "Item status - best seller"
+  },
+  "reviewsCount": "{count} reviews",
+  "@reviewsCount": {
+    "description": "Review count text",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "description": "Description",
+  "@description": {
+    "description": "Description section title"
+  },
+  "specifications": "Specifications",
+  "@specifications": {
+    "description": "Specifications section title"
+  },
+  "productId": "Product ID",
+  "@productId": {
+    "description": "Product ID label"
+  },
+  "category": "Category",
+  "@category": {
+    "description": "Category label"
+  },
+  "status": "Status",
+  "@status": {
+    "description": "Status label"
+  },
+  "price": "Price",
+  "@price": {
+    "description": "Price label"
+  },
+  "rating": "Rating",
+  "@rating": {
+    "description": "Rating label"
+  },
+  "reviewsLabel": "Reviews",
+  "@reviewsLabel": {
+    "description": "Reviews label"
+  },
+  "customerReviews": "{count} customer reviews",
+  "@customerReviews": {
+    "description": "Customer reviews text",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "tags": "Tags",
+  "@tags": {
+    "description": "Tags section title"
+  },
+  "relatedProducts": "Related Products",
+  "@relatedProducts": {
+    "description": "Related products section title"
+  },
+  "addToFavorites": "Add to Favorites",
+  "@addToFavorites": {
+    "description": "Add to favorites button"
+  },
+  "addedToFavorites": "Added to favorites",
+  "@addedToFavorites": {
+    "description": "Snackbar message for adding to favorites"
+  },
+  "addToCart": "Add to Cart",
+  "@addToCart": {
+    "description": "Add to cart button"
+  },
+  "addedToCart": "Added to cart successfully",
+  "@addedToCart": {
+    "description": "Snackbar message for adding to cart"
+  },
+  "customizeAppExperience": "Customize your app experience",
+  "@customizeAppExperience": {
+    "description": "Settings screen subtitle"
+  },
+  "configurePreferences": "Configure your application preferences. Change language, adjust display settings, manage notifications, and customize your experience.",
+  "@configurePreferences": {
+    "description": "Settings info text"
+  },
+  "languageSettings": "Language Settings",
+  "@languageSettings": {
+    "description": "Language settings section title"
+  },
+  "selectLanguage": "Select Language",
+  "@selectLanguage": {
+    "description": "Select language title"
+  },
+  "english": "English",
+  "@english": {
+    "description": "English language name"
+  },
+  "sinhala": "සිංහල",
+  "@sinhala": {
+    "description": "Sinhala language name"
+  },
+  "tamil": "தமிழ்",
+  "@tamil": {
+    "description": "Tamil language name"
+  },
+  "displaySettings": "Display Settings",
+  "@displaySettings": {
+    "description": "Display settings section title"
+  },
+  "themeMode": "Theme Mode",
+  "@themeMode": {
+    "description": "Theme mode title"
+  },
+  "lightMode": "Light Mode",
+  "@lightMode": {
+    "description": "Light mode option"
+  },
+  "darkMode": "Dark Mode",
+  "@darkMode": {
+    "description": "Dark mode option"
+  },
+  "systemDefault": "System Default",
+  "@systemDefault": {
+    "description": "System default theme option"
+  },
+  "notifications": "Notifications",
+  "@notifications": {
+    "description": "Notifications section title"
+  },
+  "enableNotifications": "Enable Notifications",
+  "@enableNotifications": {
+    "description": "Enable notifications title"
+  },
+  "notificationsDescription": "Receive updates about new features, important announcements, and personalized content recommendations.",
+  "@notificationsDescription": {
+    "description": "Notifications description"
+  },
+  "security": "Security",
+  "@security": {
+    "description": "Security section title"
+  },
+  "biometricAuthentication": "Biometric Authentication",
+  "@biometricAuthentication": {
+    "description": "Biometric authentication title"
+  },
+  "biometricDescription": "Use fingerprint or face recognition to secure your app.",
+  "@biometricDescription": {
+    "description": "Biometric authentication description"
+  },
+  "dataSync": "Data & Sync",
+  "@dataSync": {
+    "description": "Data & Sync section title"
+  },
+  "autoSync": "Auto Sync",
+  "@autoSync": {
+    "description": "Auto sync title"
+  },
+  "autoSyncDescription": "Automatically sync your data across all devices.",
+  "@autoSyncDescription": {
+    "description": "Auto sync description"
+  },
+  "saveSettings": "Save Settings",
+  "@saveSettings": {
+    "description": "Save settings button"
+  },
+  "settingsSaved": "Settings saved successfully",
+  "@settingsSaved": {
+    "description": "Settings saved snackbar message"
+  },
+  "overview": "Overview",
+  "@overview": {
+    "description": "Overview section title"
+  },
+  "aboutDescription": "This application is part of a comprehensive research project comparing different localization methods in Flutter. This prototype demonstrates Flutter's built-in localization system using gen-l10n and ARB files. The application supports multiple languages and showcases best practices for internationalization in modern mobile applications.",
+  "@aboutDescription": {
+    "description": "About screen description"
+  },
+  "technicalDetails": "Technical Details",
+  "@technicalDetails": {
+    "description": "Technical details section title"
+  },
+  "technologyStack": "Technology Stack",
+  "@technologyStack": {
+    "description": "Technology stack title"
+  },
+  "techDescription": "Built with Flutter framework using the gen-l10n code generation tool. Localization strings are managed through ARB (Application Resource Bundle) files, which provide a standardized format for managing translations. The system supports compile-time localization with type-safe access to localized strings through generated code.",
+  "@techDescription": {
+    "description": "Technology description"
+  },
+  "flutterSdk": "Flutter SDK",
+  "@flutterSdk": {
+    "description": "Flutter SDK title"
+  },
+  "flutterSdkDescription": "Latest stable version with Material 3 design",
+  "@flutterSdkDescription": {
+    "description": "Flutter SDK description"
+  },
+  "keyFeatures": "Key Features",
+  "@keyFeatures": {
+    "description": "Key features section title"
+  },
+  "multiLanguageSupport": "Multi-language Support",
+  "@multiLanguageSupport": {
+    "description": "Multi-language support feature title"
+  },
+  "multiLanguageDescription": "Full support for English, Sinhala, and Tamil languages with comprehensive string coverage",
+  "@multiLanguageDescription": {
+    "description": "Multi-language support description"
+  },
+  "typeSafeLocalization": "Type-Safe Localization",
+  "@typeSafeLocalization": {
+    "description": "Type-safe localization feature title"
+  },
+  "typeSafeDescription": "Compile-time type checking ensures error-free localization access",
+  "@typeSafeDescription": {
+    "description": "Type-safe localization description"
+  },
+  "runtimeLanguageSwitching": "Runtime Language Switching",
+  "@runtimeLanguageSwitching": {
+    "description": "Runtime language switching feature title"
+  },
+  "runtimeSwitchingDescription": "Seamless language switching without app restart",
+  "@runtimeSwitchingDescription": {
+    "description": "Runtime language switching description"
+  },
+  "comprehensiveCoverage": "Comprehensive Coverage",
+  "@comprehensiveCoverage": {
+    "description": "Comprehensive coverage feature title"
+  },
+  "coverageDescription": "All UI elements and content are fully localized",
+  "@coverageDescription": {
+    "description": "Comprehensive coverage description"
+  },
+  "performanceOptimized": "Performance Optimized",
+  "@performanceOptimized": {
+    "description": "Performance optimized feature title"
+  },
+  "performanceDescription": "Efficient localization system with minimal overhead",
+  "@performanceDescription": {
+    "description": "Performance optimized description"
+  },
+  "contactInformation": "Contact Information",
+  "@contactInformation": {
+    "description": "Contact information section title"
+  },
+  "email": "Email",
+  "@email": {
+    "description": "Email label"
+  },
+  "website": "Website",
+  "@website": {
+    "description": "Website label"
+  },
+  "githubRepository": "GitHub Repository",
+  "@githubRepository": {
+    "description": "GitHub repository label"
+  },
+  "emailCopied": "Email address copied to clipboard",
+  "@emailCopied": {
+    "description": "Email copied snackbar message"
+  },
+  "copyright": "© 2026 Research Project. All rights reserved.",
+  "@copyright": {
+    "description": "Copyright text"
+  },
+  "premiumProductDescription": "This premium product features exceptional quality and craftsmanship. Designed with attention to detail, it offers outstanding performance and durability. Perfect for both professional and personal use, this item represents the perfect balance between functionality and style.",
+  "@premiumProductDescription": {
+    "description": "Premium product description text"
+  },
+  "item": "Item {number}",
+  "@item": {
+    "description": "Item title with number",
+    "placeholders": {
+      "number": {
+        "type": "int"
+      }
+    }
+  },
+  "premiumQualityDescription": "Premium quality {category} item with exceptional features. This product offers outstanding value and performance. Perfect for everyday use and designed to meet your highest expectations.",
+  "@premiumQualityDescription": {
+    "description": "Premium quality item description",
+    "placeholders": {
+      "category": {
+        "type": "String"
+      }
+    }
+  },
+  "ratingOutOfFive": "{rating} / 5.0",
+  "@ratingOutOfFive": {
+    "description": "Rating out of 5.0",
+    "placeholders": {
+      "rating": {
+        "type": "String"
+      }
+    }
+  }
+}

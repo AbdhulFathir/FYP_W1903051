@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import '../l10n/app_localizations.dart';
 import '../models/item.dart';
 
 class DetailScreen extends StatelessWidget {
@@ -10,11 +10,12 @@ class DetailScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
+    final l10n = AppLocalizations.of(context)!;
     final statusColors = {
-      'Available': Colors.green,
-      'Limited Stock': Colors.orange,
-      'New Arrival': Colors.blue,
-      'Best Seller': Colors.purple,
+      l10n.available: Colors.green,
+      l10n.limitedStock: Colors.orange,
+      l10n.newArrival: Colors.blue,
+      l10n.bestSeller: Colors.purple,
     };
     final statusColor = statusColors[item.status] ?? Colors.grey;
 
@@ -138,7 +139,7 @@ class DetailScreen extends StatelessWidget {
                             ),
                             const SizedBox(width: 8),
                             Text(
-                              '(${item.reviewCount} reviews)',
+                              l10n.reviewsCount(item.reviewCount),
                               style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                                     color: Colors.white.withOpacity(0.9),
                                   ),
@@ -177,7 +178,7 @@ class DetailScreen extends StatelessWidget {
                             ),
                             const SizedBox(width: 8),
                             Text(
-                              'Description',
+                              l10n.description,
                               style: Theme.of(context).textTheme.titleLarge?.copyWith(
                                     fontWeight: FontWeight.bold,
                                   ),
@@ -195,7 +196,7 @@ class DetailScreen extends StatelessWidget {
                         ),
                         const SizedBox(height: 16),
                         Text(
-                          'This premium product features exceptional quality and craftsmanship. Designed with attention to detail, it offers outstanding performance and durability. Perfect for both professional and personal use, this item represents the perfect balance between functionality and style.',
+                          l10n.premiumProductDescription,
                           style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                                 height: 1.6,
                                 color: colorScheme.onSurfaceVariant,
@@ -226,7 +227,7 @@ class DetailScreen extends StatelessWidget {
                             ),
                             const SizedBox(width: 8),
                             Text(
-                              'Specifications',
+                              l10n.specifications,
                               style: Theme.of(context).textTheme.titleLarge?.copyWith(
                                     fontWeight: FontWeight.bold,
                                   ),
@@ -237,39 +238,39 @@ class DetailScreen extends StatelessWidget {
                         _buildSpecificationRow(
                           context,
                           Icons.tag_rounded,
-                          'Product ID',
+                          l10n.productId,
                           '#${item.id.toString().padLeft(6, '0')}',
                         ),
                         _buildSpecificationRow(
                           context,
                           Icons.category_rounded,
-                          'Category',
+                          l10n.category,
                           item.category,
                         ),
                         _buildSpecificationRow(
                           context,
                           Icons.check_circle_rounded,
-                          'Status',
+                          l10n.status,
                           item.status,
                           valueColor: statusColor,
                         ),
                         _buildSpecificationRow(
                           context,
                           Icons.attach_money_rounded,
-                          'Price',
+                          l10n.price,
                           '\$${item.price.toStringAsFixed(2)}',
                         ),
                         _buildSpecificationRow(
                           context,
                           Icons.star_rounded,
-                          'Rating',
-                          '${item.rating.toStringAsFixed(1)} / 5.0',
+                          l10n.rating,
+                          l10n.ratingOutOfFive(item.rating.toStringAsFixed(1)),
                         ),
                         _buildSpecificationRow(
                           context,
                           Icons.reviews_rounded,
-                          'Reviews',
-                          '${item.reviewCount} customer reviews',
+                          l10n.reviewsLabel,
+                          l10n.customerReviews(item.reviewCount),
                         ),
                       ],
                     ),
@@ -279,7 +280,7 @@ class DetailScreen extends StatelessWidget {
                 // Tags Section
                 if (item.tags.isNotEmpty) ...[
                   Text(
-                    'Tags',
+                    l10n.tags,
                     style: Theme.of(context).textTheme.titleLarge?.copyWith(
                           fontWeight: FontWeight.bold,
                         ),
@@ -303,7 +304,7 @@ class DetailScreen extends StatelessWidget {
                 ],
                 // Related Items Section
                 Text(
-                  'Related Products',
+                  l10n.relatedProducts,
                   style: Theme.of(context).textTheme.titleLarge?.copyWith(
                         fontWeight: FontWeight.bold,
                       ),
@@ -358,7 +359,7 @@ class DetailScreen extends StatelessWidget {
                                   ),
                                   const SizedBox(height: 8),
                                   Text(
-                                    'Item $relatedId',
+                                    l10n.item(relatedId),
                                     style: Theme.of(context).textTheme.bodySmall?.copyWith(
                                           fontWeight: FontWeight.bold,
                                         ),
@@ -384,11 +385,11 @@ class DetailScreen extends StatelessWidget {
                         onPressed: () {
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(
-                              content: const Row(
+                              content: Row(
                                 children: [
-                                  Icon(Icons.favorite, color: Colors.white),
-                                  SizedBox(width: 8),
-                                  Text('Added to favorites'),
+                                  const Icon(Icons.favorite, color: Colors.white),
+                                  const SizedBox(width: 8),
+                                  Text(l10n.addedToFavorites),
                                 ],
                               ),
                               backgroundColor: Colors.pink,
@@ -400,7 +401,7 @@ class DetailScreen extends StatelessWidget {
                           );
                         },
                         icon: const Icon(Icons.favorite_border),
-                        label: const Text('Add to Favorites'),
+                        label: Text(l10n.addToFavorites),
                         style: OutlinedButton.styleFrom(
                           padding: const EdgeInsets.symmetric(vertical: 16),
                           side: BorderSide(color: colorScheme.primary),
@@ -413,11 +414,11 @@ class DetailScreen extends StatelessWidget {
                         onPressed: () {
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(
-                              content: const Row(
+                              content: Row(
                                 children: [
-                                  Icon(Icons.shopping_cart, color: Colors.white),
-                                  SizedBox(width: 8),
-                                  Text('Added to cart successfully'),
+                                  const Icon(Icons.shopping_cart, color: Colors.white),
+                                  const SizedBox(width: 8),
+                                  Text(l10n.addedToCart),
                                 ],
                               ),
                               backgroundColor: Colors.green,
@@ -429,7 +430,7 @@ class DetailScreen extends StatelessWidget {
                           );
                         },
                         icon: const Icon(Icons.shopping_cart),
-                        label: const Text('Add to Cart'),
+                        label: Text(l10n.addToCart),
                         style: ElevatedButton.styleFrom(
                           padding: const EdgeInsets.symmetric(vertical: 16),
                           backgroundColor: colorScheme.primary,
