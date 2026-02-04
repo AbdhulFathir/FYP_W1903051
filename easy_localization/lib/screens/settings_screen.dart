@@ -168,7 +168,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         groupValue: selectedLanguage,
                         onChanged: (String? value) {
                           if (value == null) return;
-                          context.read<LocaleProvider>().setLocale(Locale(value));
+                          final locale = Locale(value);
+                          context.read<LocaleProvider>().setLocale(locale);
+                          context.setLocale(locale);
                         },
                       ),
                       const Divider(height: 1, indent: 72),
@@ -201,7 +203,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         groupValue: selectedLanguage,
                         onChanged: (String? value) {
                           if (value == null) return;
-                          context.read<LocaleProvider>().setLocale(Locale(value));
+                          final locale = Locale(value);
+                          context.read<LocaleProvider>().setLocale(locale);
+                          context.setLocale(locale);
                         },
                       ),
                       const Divider(height: 1, indent: 72),
@@ -234,7 +238,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         groupValue: selectedLanguage,
                         onChanged: (String? value) {
                           if (value == null) return;
-                          context.read<LocaleProvider>().setLocale(Locale(value));
+                          final locale = Locale(value);
+                          context.read<LocaleProvider>().setLocale(locale);
+                          context.setLocale(locale);
                         },
                       ),
                     ],

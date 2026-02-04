@@ -42,15 +42,6 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final localeProvider = context.watch<LocaleProvider>();
-    // Keep easy_localization and Provider locale in sync.
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      final current = context.locale;
-      if (current != localeProvider.locale) {
-        context.setLocale(localeProvider.locale);
-      }
-    });
-
     return MaterialApp(
       title: 'Localization Research Project',
       debugShowCheckedModeBanner: false,
@@ -60,7 +51,8 @@ class MyApp extends StatelessWidget {
       ),
       localizationsDelegates: context.localizationDelegates,
       supportedLocales: context.supportedLocales,
-      locale: localeProvider.locale,
+      // Locale is controlled by Provider and EasyLocalization together.
+      locale: context.watch<LocaleProvider>().locale,
       home: const HomeScreen(),
     );
   }
