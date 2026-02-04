@@ -1,8 +1,9 @@
-import 'package:easy_localization/screens/settings_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 import 'about_screen.dart';
 import 'list_screen.dart';
+import 'settings_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -67,7 +68,7 @@ class HomeScreen extends StatelessWidget {
                         ),
                         const SizedBox(height: 20),
                         Text(
-                          'Welcome to Localization Research',
+                          'home.welcome_title'.tr(),
                           style: Theme.of(context).textTheme.headlineMedium?.copyWith(
                                 color: Colors.white,
                                 fontWeight: FontWeight.bold,
@@ -76,7 +77,7 @@ class HomeScreen extends StatelessWidget {
                         ),
                         const SizedBox(height: 12),
                         Text(
-                          'Version 1.0.0',
+                          'home.version'.tr(),
                           style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                                 color: Colors.white.withOpacity(0.9),
                               ),
@@ -92,7 +93,7 @@ class HomeScreen extends StatelessWidget {
                             borderRadius: BorderRadius.circular(12),
                           ),
                           child: Text(
-                            'This application demonstrates built-in Flutter localization using gen-l10n and ARB files. Explore different screens to experience multilingual support in action.',
+                            'home.intro'.tr(),
                             style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                                   color: Colors.white,
                                   height: 1.5,
@@ -115,7 +116,7 @@ class HomeScreen extends StatelessWidget {
                     ),
                     const SizedBox(width: 12),
                     Text(
-                      'Quick Navigation',
+                      'home.quick_nav'.tr(),
                       style: Theme.of(context).textTheme.headlineSmall?.copyWith(
                             fontWeight: FontWeight.bold,
                             color: colorScheme.onSurface,
@@ -134,8 +135,8 @@ class HomeScreen extends StatelessWidget {
                   children: [
                     _buildNavigationCard(
                       context,
-                      'Items List',
-                      'Browse through our collection',
+                      'home.nav_items_list'.tr(),
+                      'home.nav_items_list_subtitle'.tr(),
                       Icons.list_alt_rounded,
                       const Color(0xFF3B82F6),
                       const Color(0xFF60A5FA),
@@ -150,8 +151,8 @@ class HomeScreen extends StatelessWidget {
                     ),
                     _buildNavigationCard(
                       context,
-                      'Settings',
-                      'Customize your experience',
+                      'home.nav_settings'.tr(),
+                      'home.nav_settings_subtitle'.tr(),
                       Icons.settings_rounded,
                       const Color(0xFF10B981),
                       const Color(0xFF34D399),
@@ -166,8 +167,8 @@ class HomeScreen extends StatelessWidget {
                     ),
                     _buildNavigationCard(
                       context,
-                      'About',
-                      'Learn more about the app',
+                      'home.nav_about'.tr(),
+                      'home.nav_about_subtitle'.tr(),
                       Icons.info_rounded,
                       const Color(0xFFF59E0B),
                       const Color(0xFFFBBF24),
@@ -193,9 +194,9 @@ class HomeScreen extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
-                      _buildStatItem(context, '3', 'Languages', Icons.translate_rounded),
-                      _buildStatItem(context, '5', 'Screens', Icons.layers_rounded),
-                      _buildStatItem(context, '20+', 'Items', Icons.inventory_2_rounded),
+                      _buildStatItem(context, '3', 'home.stats_languages'.tr(), Icons.translate_rounded),
+                      _buildStatItem(context, '5', 'home.stats_screens'.tr(), Icons.layers_rounded),
+                      _buildStatItem(context, '20+', 'home.stats_items'.tr(), Icons.inventory_2_rounded),
                     ],
                   ),
                 ),

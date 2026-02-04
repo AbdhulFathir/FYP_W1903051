@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 import '../models/item.dart';
 import 'detail_screen.dart';
@@ -13,8 +14,19 @@ class ListScreen extends StatefulWidget {
 class _ListScreenState extends State<ListScreen> {
   final List<Item> _items = [];
   int _itemCount = 20;
-  final List<String> _categories = ['Electronics', 'Clothing', 'Books', 'Home & Garden', 'Sports'];
-  final List<String> _statuses = ['Available', 'Limited Stock', 'New Arrival', 'Best Seller'];
+  final List<String> _categoryKeys = [
+    'common.category_electronics',
+    'common.category_clothing',
+    'common.category_books',
+    'common.category_home_garden',
+    'common.category_sports',
+  ];
+  final List<String> _statusKeys = [
+    'common.status_available',
+    'common.status_limited',
+    'common.status_new',
+    'common.status_best',
+  ];
 
   @override
   void initState() {
@@ -25,22 +37,20 @@ class _ListScreenState extends State<ListScreen> {
   void _loadItems() {
     setState(() {
       for (int i = _items.length + 1; i <= _itemCount; i++) {
-        final category = _categories[i % _categories.length];
-        final status = _statuses[i % _statuses.length];
+        final categoryKey = _categoryKeys[i % _categoryKeys.length];
+        final statusKey = _statusKeys[i % _statusKeys.length];
         final price = (19.99 + (i * 5.50)).toStringAsFixed(2);
         final rating = 3.5 + (i % 3) * 0.5;
         final reviewCount = 10 + (i * 3);
-        
+
         _items.add(Item(
           id: i,
-          title: '$category Item $i',
-          description: 'Premium quality $category item with exceptional features. This product offers outstanding value and performance. Perfect for everyday use and designed to meet your highest expectations.',
-          category: category,
+          categoryKey: categoryKey,
           price: double.parse(price),
           rating: rating,
           reviewCount: reviewCount,
-          status: status,
-          tags: [category, status, 'Featured'],
+          statusKey: statusKey,
+          tagKeys: [categoryKey, statusKey, 'common.tag_featured'],
         ));
       }
     });
@@ -108,13 +118,16 @@ class _ListScreenState extends State<ListScreen> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                'Product Catalog',
+                                'list.title'.tr(),
                                 style: Theme.of(context).textTheme.headlineSmall?.copyWith(
                                       fontWeight: FontWeight.bold,
                                     ),
                               ),
                               Text(
-                                '${_items.length} items available',
+                                tr(
+                                  'list.subtitle_items_available',
+                                  args: [_items.length.toString()],
+                                ),
                                 style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                                       color: colorScheme.onSurfaceVariant,
                                     ),
@@ -141,7 +154,7 @@ class _ListScreenState extends State<ListScreen> {
                           const SizedBox(width: 8),
                           Expanded(
                             child: Text(
-                              'Tap on any item to view detailed information, specifications, and related products.',
+                              'list.hint'.tr(),
                               style: Theme.of(context).textTheme.bodySmall?.copyWith(
                                     color: colorScheme.onSurfaceVariant,
                                   ),
@@ -166,7 +179,7 @@ class _ListScreenState extends State<ListScreen> {
                           child: ElevatedButton.icon(
                             onPressed: _loadMore,
                             icon: const Icon(Icons.add_circle_outline),
-                            label: const Text('Load More Items'),
+                            label: Text('list.load_more'.tr()),
                             style: ElevatedButton.styleFrom(
                               padding: const EdgeInsets.symmetric(
                                 horizontal: 32,
@@ -192,13 +205,28 @@ class _ListScreenState extends State<ListScreen> {
 
   Widget _buildItemCard(BuildContext context, Item item) {
     final colorScheme = Theme.of(context).colorScheme;
+    final category = item.categoryKey.tr();
+    final title = tr(
+      'list.item_title',
+      namedArgs: {
+        'category': category,
+        'id': item.id.toString(),
+      },
+    );
+    final description = tr(
+      'list.item_description',
+      namedArgs: {
+        'category': category,
+      },
+    );
     final statusColors = {
-      'Available': Colors.green,
-      'Limited Stock': Colors.orange,
-      'New Arrival': Colors.blue,
-      'Best Seller': Colors.purple,
+      'common.status_available': Colors.green,
+      'common.status_limited': Colors.orange,
+      'common.status_new': Colors.blue,
+      'common.status_best': Colors.purple,
     };
-    final statusColor = statusColors[item.status] ?? Colors.grey;
+    final statusColor = statusColors[item.statusKey] ?? Colors.grey;
+    final statusLabel = item.statusKey.tr();
 
     return Card(
       margin: const EdgeInsets.only(bottom: 16),
@@ -257,7 +285,7 @@ class _ListScreenState extends State<ListScreen> {
                       children: [
                         Expanded(
                           child: Text(
-                            item.title,
+                            title,
                             style: Theme.of(context).textTheme.titleMedium?.copyWith(
                                   fontWeight: FontWeight.bold,
                                 ),
@@ -275,7 +303,7 @@ class _ListScreenState extends State<ListScreen> {
                             borderRadius: BorderRadius.circular(8),
                           ),
                           child: Text(
-                            item.status,
+                            statusLabel,
                             style: TextStyle(
                               color: statusColor,
                               fontSize: 10,
@@ -287,7 +315,7 @@ class _ListScreenState extends State<ListScreen> {
                     ),
                     const SizedBox(height: 6),
                     Text(
-                      item.description,
+                      description,
                       style: Theme.of(context).textTheme.bodySmall?.copyWith(
                             color: colorScheme.onSurfaceVariant,
                             height: 1.4,
@@ -332,10 +360,10 @@ class _ListScreenState extends State<ListScreen> {
                     const SizedBox(height: 8),
                     Wrap(
                       spacing: 6,
-                      children: item.tags.take(2).map((tag) {
+                      children: item.tagKeys.take(2).map((tagKey) {
                         return Chip(
                           label: Text(
-                            tag,
+                            tagKey.tr(),
                             style: const TextStyle(fontSize: 10),
                           ),
                           padding: EdgeInsets.zero,

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 import '../models/item.dart';
 
@@ -10,13 +11,28 @@ class DetailScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
+    final category = item.categoryKey.tr();
+    final title = tr(
+      'list.item_title',
+      namedArgs: {
+        'category': category,
+        'id': item.id.toString(),
+      },
+    );
+    final description = tr(
+      'list.item_description',
+      namedArgs: {
+        'category': category,
+      },
+    );
     final statusColors = {
-      'Available': Colors.green,
-      'Limited Stock': Colors.orange,
-      'New Arrival': Colors.blue,
-      'Best Seller': Colors.purple,
+      'common.status_available': Colors.green,
+      'common.status_limited': Colors.orange,
+      'common.status_new': Colors.blue,
+      'common.status_best': Colors.purple,
     };
-    final statusColor = statusColors[item.status] ?? Colors.grey;
+    final statusColor = statusColors[item.statusKey] ?? Colors.grey;
+    final statusLabel = item.statusKey.tr();
 
     return Scaffold(
       body: Container(
@@ -87,7 +103,7 @@ class DetailScreen extends StatelessWidget {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    item.title,
+                                    title,
                                     style: Theme.of(context)
                                         .textTheme
                                         .headlineSmall
@@ -107,7 +123,7 @@ class DetailScreen extends StatelessWidget {
                                       borderRadius: BorderRadius.circular(8),
                                     ),
                                     child: Text(
-                                      item.status,
+                                      statusLabel,
                                       style: TextStyle(
                                         color: Colors.white,
                                         fontWeight: FontWeight.bold,
@@ -138,7 +154,7 @@ class DetailScreen extends StatelessWidget {
                             ),
                             const SizedBox(width: 8),
                             Text(
-                              '(${item.reviewCount} reviews)',
+                              tr('detail.reviews', args: [item.reviewCount.toString()]),
                               style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                                     color: Colors.white.withOpacity(0.9),
                                   ),
@@ -177,7 +193,7 @@ class DetailScreen extends StatelessWidget {
                             ),
                             const SizedBox(width: 8),
                             Text(
-                              'Description',
+                              'detail.section_description'.tr(),
                               style: Theme.of(context).textTheme.titleLarge?.copyWith(
                                     fontWeight: FontWeight.bold,
                                   ),
@@ -186,7 +202,7 @@ class DetailScreen extends StatelessWidget {
                         ),
                         const SizedBox(height: 16),
                         Text(
-                          item.description,
+                          description,
                           style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                                 height: 1.6,
                                 color: colorScheme.onSurfaceVariant,
@@ -195,7 +211,7 @@ class DetailScreen extends StatelessWidget {
                         ),
                         const SizedBox(height: 16),
                         Text(
-                          'This premium product features exceptional quality and craftsmanship. Designed with attention to detail, it offers outstanding performance and durability. Perfect for both professional and personal use, this item represents the perfect balance between functionality and style.',
+                          'detail.long_paragraph'.tr(),
                           style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                                 height: 1.6,
                                 color: colorScheme.onSurfaceVariant,
@@ -226,7 +242,7 @@ class DetailScreen extends StatelessWidget {
                             ),
                             const SizedBox(width: 8),
                             Text(
-                              'Specifications',
+                              'detail.section_specifications'.tr(),
                               style: Theme.of(context).textTheme.titleLarge?.copyWith(
                                     fontWeight: FontWeight.bold,
                                   ),
@@ -237,39 +253,39 @@ class DetailScreen extends StatelessWidget {
                         _buildSpecificationRow(
                           context,
                           Icons.tag_rounded,
-                          'Product ID',
+                          'detail.spec_product_id'.tr(),
                           '#${item.id.toString().padLeft(6, '0')}',
                         ),
                         _buildSpecificationRow(
                           context,
                           Icons.category_rounded,
-                          'Category',
-                          item.category,
+                          'detail.spec_category'.tr(),
+                          category,
                         ),
                         _buildSpecificationRow(
                           context,
                           Icons.check_circle_rounded,
-                          'Status',
-                          item.status,
+                          'detail.spec_status'.tr(),
+                          statusLabel,
                           valueColor: statusColor,
                         ),
                         _buildSpecificationRow(
                           context,
                           Icons.attach_money_rounded,
-                          'Price',
+                          'detail.spec_price'.tr(),
                           '\$${item.price.toStringAsFixed(2)}',
                         ),
                         _buildSpecificationRow(
                           context,
                           Icons.star_rounded,
-                          'Rating',
-                          '${item.rating.toStringAsFixed(1)} / 5.0',
+                          'detail.spec_rating'.tr(),
+                          tr('detail.spec_rating_value', args: [item.rating.toStringAsFixed(1)]),
                         ),
                         _buildSpecificationRow(
                           context,
                           Icons.reviews_rounded,
-                          'Reviews',
-                          '${item.reviewCount} customer reviews',
+                          'detail.spec_reviews'.tr(),
+                          tr('detail.spec_customer_reviews', args: [item.reviewCount.toString()]),
                         ),
                       ],
                     ),
@@ -277,9 +293,9 @@ class DetailScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 24),
                 // Tags Section
-                if (item.tags.isNotEmpty) ...[
+                if (item.tagKeys.isNotEmpty) ...[
                   Text(
-                    'Tags',
+                    'detail.section_tags'.tr(),
                     style: Theme.of(context).textTheme.titleLarge?.copyWith(
                           fontWeight: FontWeight.bold,
                         ),
@@ -288,9 +304,9 @@ class DetailScreen extends StatelessWidget {
                   Wrap(
                     spacing: 8,
                     runSpacing: 8,
-                    children: item.tags.map((tag) {
+                    children: item.tagKeys.map((tagKey) {
                       return Chip(
-                        label: Text(tag),
+                        label: Text(tagKey.tr()),
                         avatar: Icon(
                           Icons.label_rounded,
                           size: 18,
@@ -303,7 +319,7 @@ class DetailScreen extends StatelessWidget {
                 ],
                 // Related Items Section
                 Text(
-                  'Related Products',
+                  'detail.section_related'.tr(),
                   style: Theme.of(context).textTheme.titleLarge?.copyWith(
                         fontWeight: FontWeight.bold,
                       ),
@@ -358,7 +374,7 @@ class DetailScreen extends StatelessWidget {
                                   ),
                                   const SizedBox(height: 8),
                                   Text(
-                                    'Item $relatedId',
+                                    tr('detail.related_item', args: [relatedId.toString()]),
                                     style: Theme.of(context).textTheme.bodySmall?.copyWith(
                                           fontWeight: FontWeight.bold,
                                         ),
@@ -384,11 +400,11 @@ class DetailScreen extends StatelessWidget {
                         onPressed: () {
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(
-                              content: const Row(
+                              content: Row(
                                 children: [
-                                  Icon(Icons.favorite, color: Colors.white),
-                                  SizedBox(width: 8),
-                                  Text('Added to favorites'),
+                                  const Icon(Icons.favorite, color: Colors.white),
+                                  const SizedBox(width: 8),
+                                  Text('detail.snackbar_favorites'.tr()),
                                 ],
                               ),
                               backgroundColor: Colors.pink,
@@ -400,7 +416,7 @@ class DetailScreen extends StatelessWidget {
                           );
                         },
                         icon: const Icon(Icons.favorite_border),
-                        label: const Text('Add to Favorites'),
+                        label: Text('detail.btn_favorites'.tr()),
                         style: OutlinedButton.styleFrom(
                           padding: const EdgeInsets.symmetric(vertical: 16),
                           side: BorderSide(color: colorScheme.primary),
@@ -413,11 +429,11 @@ class DetailScreen extends StatelessWidget {
                         onPressed: () {
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(
-                              content: const Row(
+                              content: Row(
                                 children: [
-                                  Icon(Icons.shopping_cart, color: Colors.white),
-                                  SizedBox(width: 8),
-                                  Text('Added to cart successfully'),
+                                  const Icon(Icons.shopping_cart, color: Colors.white),
+                                  const SizedBox(width: 8),
+                                  Text('detail.snackbar_cart'.tr()),
                                 ],
                               ),
                               backgroundColor: Colors.green,
@@ -429,7 +445,7 @@ class DetailScreen extends StatelessWidget {
                           );
                         },
                         icon: const Icon(Icons.shopping_cart),
-                        label: const Text('Add to Cart'),
+                        label: Text('detail.btn_cart'.tr()),
                         style: ElevatedButton.styleFrom(
                           padding: const EdgeInsets.symmetric(vertical: 16),
                           backgroundColor: colorScheme.primary,
