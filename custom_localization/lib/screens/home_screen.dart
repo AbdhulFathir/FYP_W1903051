@@ -61,7 +61,7 @@ class HomeScreen extends StatelessWidget {
                             color: Colors.white.withOpacity(0.2),
                             shape: BoxShape.circle,
                           ),
-                          child: Icon(
+                          child: const Icon(
                             Icons.language_rounded,
                             size: 64,
                             color: Colors.white,
@@ -116,12 +116,16 @@ class HomeScreen extends StatelessWidget {
                       size: 28,
                     ),
                     const SizedBox(width: 12),
-                    Text(
-                      engine.translate('home.quick_nav'),
-                      style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                            fontWeight: FontWeight.bold,
-                            color: colorScheme.onSurface,
-                          ),
+                    Expanded(
+                      child: Text(
+                        engine.translate('home.quick_nav'),
+                        style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                              fontWeight: FontWeight.bold,
+                              color: colorScheme.onSurface,
+                            ),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
                     ),
                   ],
                 ),
@@ -195,9 +199,9 @@ class HomeScreen extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
-                      _buildStatItem(context, '3', engine.translate('home.languages'), Icons.translate_rounded),
-                      _buildStatItem(context, '5', engine.translate('home.screens'), Icons.layers_rounded),
-                      _buildStatItem(context, '20+', engine.translate('home.items'), Icons.inventory_2_rounded),
+                      Expanded(child: _buildStatItem(context, '3', engine.translate('home.languages'), Icons.translate_rounded)),
+                      Expanded(child: _buildStatItem(context, '5', engine.translate('home.screens'), Icons.layers_rounded)),
+                      Expanded(child: _buildStatItem(context, '20+', engine.translate('home.items'), Icons.inventory_2_rounded)),
                     ],
                   ),
                 ),
@@ -298,6 +302,7 @@ class HomeScreen extends StatelessWidget {
                 fontWeight: FontWeight.bold,
                 color: Theme.of(context).colorScheme.primary,
               ),
+          textAlign: TextAlign.center,
         ),
         const SizedBox(height: 4),
         Text(
@@ -305,6 +310,9 @@ class HomeScreen extends StatelessWidget {
           style: Theme.of(context).textTheme.bodySmall?.copyWith(
                 color: Theme.of(context).colorScheme.onSurfaceVariant,
               ),
+          textAlign: TextAlign.center,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
         ),
       ],
     );
