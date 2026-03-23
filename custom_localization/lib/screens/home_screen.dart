@@ -1,3 +1,4 @@
+import 'package:custom_localization/core/localization/localization_engine.dart';
 import 'package:custom_localization/screens/settings_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -10,6 +11,7 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
+    final engine = LocalizationEngine();
     
     return Scaffold(
       body: Container(
@@ -67,7 +69,7 @@ class HomeScreen extends StatelessWidget {
                         ),
                         const SizedBox(height: 20),
                         Text(
-                          'Welcome to Localization Research',
+                          engine.translate('home.title'),
                           style: Theme.of(context).textTheme.headlineMedium?.copyWith(
                                 color: Colors.white,
                                 fontWeight: FontWeight.bold,
@@ -76,7 +78,7 @@ class HomeScreen extends StatelessWidget {
                         ),
                         const SizedBox(height: 12),
                         Text(
-                          'Version 1.0.0',
+                          engine.translate('home.version'),
                           style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                                 color: Colors.white.withOpacity(0.9),
                               ),
@@ -92,7 +94,7 @@ class HomeScreen extends StatelessWidget {
                             borderRadius: BorderRadius.circular(12),
                           ),
                           child: Text(
-                            'This application demonstrates built-in Flutter localization using gen-l10n and ARB files. Explore different screens to experience multilingual support in action.',
+                            engine.translate('home.desc'),
                             style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                                   color: Colors.white,
                                   height: 1.5,
@@ -115,7 +117,7 @@ class HomeScreen extends StatelessWidget {
                     ),
                     const SizedBox(width: 12),
                     Text(
-                      'Quick Navigation',
+                      engine.translate('home.quick_nav'),
                       style: Theme.of(context).textTheme.headlineSmall?.copyWith(
                             fontWeight: FontWeight.bold,
                             color: colorScheme.onSurface,
@@ -134,8 +136,8 @@ class HomeScreen extends StatelessWidget {
                   children: [
                     _buildNavigationCard(
                       context,
-                      'Items List',
-                      'Browse through our collection',
+                      engine.translate('home.items_list'),
+                      engine.translate('home.items_list_desc'),
                       Icons.list_alt_rounded,
                       const Color(0xFF3B82F6),
                       const Color(0xFF60A5FA),
@@ -150,8 +152,8 @@ class HomeScreen extends StatelessWidget {
                     ),
                     _buildNavigationCard(
                       context,
-                      'Settings',
-                      'Customize your experience',
+                      engine.translate('home.settings'),
+                      engine.translate('home.settings_desc'),
                       Icons.settings_rounded,
                       const Color(0xFF10B981),
                       const Color(0xFF34D399),
@@ -166,8 +168,8 @@ class HomeScreen extends StatelessWidget {
                     ),
                     _buildNavigationCard(
                       context,
-                      'About',
-                      'Learn more about the app',
+                      engine.translate('home.about'),
+                      engine.translate('home.about_desc'),
                       Icons.info_rounded,
                       const Color(0xFFF59E0B),
                       const Color(0xFFFBBF24),
@@ -193,9 +195,9 @@ class HomeScreen extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
-                      _buildStatItem(context, '3', 'Languages', Icons.translate_rounded),
-                      _buildStatItem(context, '5', 'Screens', Icons.layers_rounded),
-                      _buildStatItem(context, '20+', 'Items', Icons.inventory_2_rounded),
+                      _buildStatItem(context, '3', engine.translate('home.languages'), Icons.translate_rounded),
+                      _buildStatItem(context, '5', engine.translate('home.screens'), Icons.layers_rounded),
+                      _buildStatItem(context, '20+', engine.translate('home.items'), Icons.inventory_2_rounded),
                     ],
                   ),
                 ),

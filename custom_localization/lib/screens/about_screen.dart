@@ -1,3 +1,4 @@
+import 'package:custom_localization/core/localization/localization_engine.dart';
 import 'package:flutter/material.dart';
 
 class AboutScreen extends StatelessWidget {
@@ -6,6 +7,7 @@ class AboutScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
+    final engine = LocalizationEngine();
 
     return Scaffold(
       body: Container(
@@ -55,7 +57,7 @@ class AboutScreen extends StatelessWidget {
                             color: Colors.white.withOpacity(0.2),
                             shape: BoxShape.circle,
                           ),
-                          child: Icon(
+                          child: const Icon(
                             Icons.info_rounded,
                             size: 64,
                             color: Colors.white,
@@ -63,7 +65,7 @@ class AboutScreen extends StatelessWidget {
                         ),
                         const SizedBox(height: 20),
                         Text(
-                          'Localization Research Project',
+                          engine.translate('about.title'),
                           style: Theme.of(context).textTheme.headlineMedium?.copyWith(
                                 color: Colors.white,
                                 fontWeight: FontWeight.bold,
@@ -81,7 +83,7 @@ class AboutScreen extends StatelessWidget {
                             borderRadius: BorderRadius.circular(20),
                           ),
                           child: Text(
-                            'Version 1.0.0',
+                            engine.translate('about.version'),
                             style: Theme.of(context).textTheme.titleMedium?.copyWith(
                                   color: Colors.white,
                                   fontWeight: FontWeight.w500,
@@ -112,7 +114,7 @@ class AboutScreen extends StatelessWidget {
                             ),
                             const SizedBox(width: 8),
                             Text(
-                              'Overview',
+                              engine.translate('about.overview'),
                               style: Theme.of(context).textTheme.titleLarge?.copyWith(
                                     fontWeight: FontWeight.bold,
                                   ),
@@ -121,7 +123,7 @@ class AboutScreen extends StatelessWidget {
                         ),
                         const SizedBox(height: 16),
                         Text(
-                          'This application is part of a comprehensive research project comparing different localization methods in Flutter. This prototype demonstrates Flutter\'s built-in localization system using gen-l10n and ARB files. The application supports multiple languages and showcases best practices for internationalization in modern mobile applications.',
+                          engine.translate('about.overview_desc'),
                           style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                                 height: 1.6,
                                 color: colorScheme.onSurfaceVariant,
@@ -135,7 +137,7 @@ class AboutScreen extends StatelessWidget {
                 const SizedBox(height: 24),
                 // Technical Details Section
                 Text(
-                  'Technical Details',
+                  engine.translate('about.tech_details'),
                   style: Theme.of(context).textTheme.titleLarge?.copyWith(
                         fontWeight: FontWeight.bold,
                       ),
@@ -159,7 +161,7 @@ class AboutScreen extends StatelessWidget {
                             ),
                             const SizedBox(width: 8),
                             Text(
-                              'Technology Stack',
+                              engine.translate('about.tech_stack'),
                               style: Theme.of(context).textTheme.titleMedium?.copyWith(
                                     fontWeight: FontWeight.bold,
                                   ),
@@ -168,7 +170,7 @@ class AboutScreen extends StatelessWidget {
                         ),
                         const SizedBox(height: 16),
                         Text(
-                          'Built with Flutter framework using the gen-l10n code generation tool. Localization strings are managed through ARB (Application Resource Bundle) files, which provide a standardized format for managing translations. The system supports compile-time localization with type-safe access to localized strings through generated code.',
+                          engine.translate('about.tech_stack_desc'),
                           style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                                 height: 1.6,
                                 color: colorScheme.onSurfaceVariant,
@@ -195,7 +197,7 @@ class AboutScreen extends StatelessWidget {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      'Flutter SDK',
+                                      engine.translate('about.flutter_sdk'),
                                       style: Theme.of(context)
                                           .textTheme
                                           .bodyMedium
@@ -204,7 +206,7 @@ class AboutScreen extends StatelessWidget {
                                           ),
                                     ),
                                     Text(
-                                      'Latest stable version with Material 3 design',
+                                      engine.translate('about.flutter_sdk_desc'),
                                       style: Theme.of(context).textTheme.bodySmall?.copyWith(
                                             color: colorScheme.onSurfaceVariant,
                                           ),
@@ -222,7 +224,7 @@ class AboutScreen extends StatelessWidget {
                 const SizedBox(height: 24),
                 // Features Section
                 Text(
-                  'Key Features',
+                  engine.translate('about.key_features'),
                   style: Theme.of(context).textTheme.titleLarge?.copyWith(
                         fontWeight: FontWeight.bold,
                       ),
@@ -239,40 +241,40 @@ class AboutScreen extends StatelessWidget {
                         context,
                         Icons.language_rounded,
                         Colors.blue,
-                        'Multi-language Support',
-                        'Full support for English, Sinhala, and Tamil languages with comprehensive string coverage',
+                        engine.translate('about.feature_multi_lang'),
+                        engine.translate('about.feature_multi_lang_desc'),
                       ),
                       const Divider(height: 1, indent: 72),
                       _buildFeatureTile(
                         context,
-                        Icons.security_rounded,
+                        Icons.bolt_rounded,
                         Colors.green,
-                        'Type-Safe Localization',
-                        'Compile-time type checking ensures error-free localization access',
+                        engine.translate('about.feature_lru'),
+                        engine.translate('about.feature_lru_desc'),
                       ),
                       const Divider(height: 1, indent: 72),
                       _buildFeatureTile(
                         context,
                         Icons.swap_horiz_rounded,
                         Colors.orange,
-                        'Runtime Language Switching',
-                        'Seamless language switching without app restart',
+                        engine.translate('about.feature_runtime'),
+                        engine.translate('about.feature_runtime_desc'),
                       ),
                       const Divider(height: 1, indent: 72),
                       _buildFeatureTile(
                         context,
-                        Icons.check_circle_rounded,
+                        Icons.download_rounded,
                         Colors.purple,
-                        'Comprehensive Coverage',
-                        'All UI elements and content are fully localized',
+                        engine.translate('about.feature_dynamic'),
+                        engine.translate('about.feature_dynamic_desc'),
                       ),
                       const Divider(height: 1, indent: 72),
                       _buildFeatureTile(
                         context,
                         Icons.speed_rounded,
                         Colors.teal,
-                        'Performance Optimized',
-                        'Efficient localization system with minimal overhead',
+                        engine.translate('about.feature_performance'),
+                        engine.translate('about.feature_performance_desc'),
                       ),
                     ],
                   ),
@@ -280,7 +282,7 @@ class AboutScreen extends StatelessWidget {
                 const SizedBox(height: 24),
                 // Contact Section
                 Text(
-                  'Contact Information',
+                  engine.translate('about.contact'),
                   style: Theme.of(context).textTheme.titleLarge?.copyWith(
                         fontWeight: FontWeight.bold,
                       ),
@@ -305,17 +307,17 @@ class AboutScreen extends StatelessWidget {
                             color: Colors.blue,
                           ),
                         ),
-                        title: const Text(
-                          'Email',
-                          style: TextStyle(fontWeight: FontWeight.bold),
+                        title: Text(
+                          engine.translate('about.email'),
+                          style: const TextStyle(fontWeight: FontWeight.bold),
                         ),
                         subtitle: const Text('info@researchproject.com'),
                         trailing: IconButton(
                           icon: const Icon(Icons.copy_rounded),
                           onPressed: () {
                             ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                content: Text('Email address copied to clipboard'),
+                              SnackBar(
+                                content: Text(engine.translate('about.email_copied')),
                                 behavior: SnackBarBehavior.floating,
                               ),
                             );
@@ -335,9 +337,9 @@ class AboutScreen extends StatelessWidget {
                             color: Colors.green,
                           ),
                         ),
-                        title: const Text(
-                          'Website',
-                          style: TextStyle(fontWeight: FontWeight.bold),
+                        title: Text(
+                          engine.translate('about.website'),
+                          style: const TextStyle(fontWeight: FontWeight.bold),
                         ),
                         subtitle: const Text('www.researchproject.com'),
                         trailing: IconButton(
@@ -358,9 +360,9 @@ class AboutScreen extends StatelessWidget {
                             color: Colors.purple,
                           ),
                         ),
-                        title: const Text(
-                          'GitHub Repository',
-                          style: TextStyle(fontWeight: FontWeight.bold),
+                        title: Text(
+                          engine.translate('about.github'),
+                          style: const TextStyle(fontWeight: FontWeight.bold),
                         ),
                         subtitle: const Text('github.com/research-project'),
                         trailing: IconButton(

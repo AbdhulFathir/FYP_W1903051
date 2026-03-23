@@ -1,3 +1,4 @@
+import 'package:custom_localization/core/localization/localization_engine.dart';
 import 'package:flutter/material.dart';
 
 import '../models/item.dart';
@@ -53,9 +54,25 @@ class _ListScreenState extends State<ListScreen> {
     });
   }
 
+  String _getLocalizedStatus(String status, LocalizationEngine engine) {
+    switch (status) {
+      case 'Available':
+        return engine.translate('catalog.available');
+      case 'Limited Stock':
+        return engine.translate('catalog.limited');
+      case 'New Arrival':
+        return engine.translate('catalog.new');
+      case 'Best Seller':
+        return engine.translate('catalog.best');
+      default:
+        return status;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
+    final engine = LocalizationEngine();
     
     return Scaffold(
       body: Container(
@@ -108,16 +125,18 @@ class _ListScreenState extends State<ListScreen> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                'Product Catalog',
+                                engine.translate('catalog.title'),
                                 style: Theme.of(context).textTheme.headlineSmall?.copyWith(
                                       fontWeight: FontWeight.bold,
                                     ),
+                                overflow: TextOverflow.ellipsis,
                               ),
                               Text(
-                                '${_items.length} items available',
+                                '${_items.length} ${engine.translate('catalog.items_available')}',
                                 style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                                       color: colorScheme.onSurfaceVariant,
                                     ),
+                                overflow: TextOverflow.ellipsis,
                               ),
                             ],
                           ),
@@ -141,7 +160,7 @@ class _ListScreenState extends State<ListScreen> {
                           const SizedBox(width: 8),
                           Expanded(
                             child: Text(
-                              'Tap on any item to view detailed information, specifications, and related products.',
+                              engine.translate('catalog.info'),
                               style: Theme.of(context).textTheme.bodySmall?.copyWith(
                                     color: colorScheme.onSurfaceVariant,
                                   ),
@@ -166,7 +185,7 @@ class _ListScreenState extends State<ListScreen> {
                           child: ElevatedButton.icon(
                             onPressed: _loadMore,
                             icon: const Icon(Icons.add_circle_outline),
-                            label: const Text('Load More Items'),
+                            label: Text(engine.translate('catalog.load_more')),
                             style: ElevatedButton.styleFrom(
                               padding: const EdgeInsets.symmetric(
                                 horizontal: 32,
@@ -179,7 +198,7 @@ class _ListScreenState extends State<ListScreen> {
                     }
 
                     final item = _items[index];
-                    return _buildItemCard(context, item);
+                    return _buildItemCard(context, item, engine);
                   },
                 ),
               ),
@@ -190,7 +209,7 @@ class _ListScreenState extends State<ListScreen> {
     );
   }
 
-  Widget _buildItemCard(BuildContext context, Item item) {
+  Widget _buildItemCard(BuildContext context, Item item, LocalizationEngine engine) {
     final colorScheme = Theme.of(context).colorScheme;
     final statusColors = {
       'Available': Colors.green,
@@ -265,21 +284,26 @@ class _ListScreenState extends State<ListScreen> {
                             overflow: TextOverflow.ellipsis,
                           ),
                         ),
-                        Container(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 8,
-                            vertical: 4,
-                          ),
-                          decoration: BoxDecoration(
-                            color: statusColor.withOpacity(0.1),
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                          child: Text(
-                            item.status,
-                            style: TextStyle(
-                              color: statusColor,
-                              fontSize: 10,
-                              fontWeight: FontWeight.bold,
+                        const SizedBox(width: 4),
+                        Flexible(
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 8,
+                              vertical: 4,
+                            ),
+                            decoration: BoxDecoration(
+                              color: statusColor.withOpacity(0.1),
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            child: Text(
+                              _getLocalizedStatus(item.status, engine),
+                              style: TextStyle(
+                                color: statusColor,
+                                fontSize: 10,
+                                fontWeight: FontWeight.bold,
+                              ),
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 1,
                             ),
                           ),
                         ),
@@ -299,7 +323,7 @@ class _ListScreenState extends State<ListScreen> {
                     Row(
                       children: [
                         // Rating
-                        Icon(
+                        const Icon(
                           Icons.star_rounded,
                           color: Colors.amber,
                           size: 16,
@@ -311,14 +335,17 @@ class _ListScreenState extends State<ListScreen> {
                                 fontWeight: FontWeight.bold,
                               ),
                         ),
-                        const SizedBox(width: 8),
-                        Text(
-                          '(${item.reviewCount})',
-                          style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                                color: colorScheme.onSurfaceVariant,
-                              ),
+                        const SizedBox(width: 4),
+                        Expanded(
+                          child: Text(
+                            '(${item.reviewCount})',
+                            style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                                  color: colorScheme.onSurfaceVariant,
+                                ),
+                            overflow: TextOverflow.ellipsis,
+                          ),
                         ),
-                        const Spacer(),
+                        const SizedBox(width: 4),
                         // Price
                         Text(
                           '\$${item.price.toStringAsFixed(2)}',
