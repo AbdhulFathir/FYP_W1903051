@@ -72,7 +72,15 @@
     "available": "Available",
     "limited": "Limited Stock",
     "new": "New Arrival",
-    "best": "Best Seller"
+    "best": "Best Seller",
+    "item": "Item"
+  },
+  "categories": {
+    "electronics": "Electronics",
+    "clothing": "Clothing",
+    "books": "Books",
+    "home_garden": "Home & Garden",
+    "sports": "Sports"
   },
   "detail": {
     "description": "Description",

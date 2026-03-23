@@ -14,44 +14,50 @@ class ListScreen extends StatefulWidget {
 class _ListScreenState extends State<ListScreen> {
   final List<Item> _items = [];
   int _itemCount = 20;
-  final List<String> _categories = ['Electronics', 'Clothing', 'Books', 'Home & Garden', 'Sports'];
+  final List<String> _categories = ['electronics', 'clothing', 'books', 'home_garden', 'sports'];
   final List<String> _statuses = ['Available', 'Limited Stock', 'New Arrival', 'Best Seller'];
 
   @override
   void initState() {
     super.initState();
-    _loadItems();
+    // Delay loading items until after the first build to ensure localization engine is ready
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _loadItems();
+    });
   }
 
   void _loadItems() {
+    final engine = LocalizationEngine();
     setState(() {
       for (int i = _items.length + 1; i <= _itemCount; i++) {
-        final category = _categories[i % _categories.length];
+        final categoryKey = _categories[i % _categories.length];
         final status = _statuses[i % _statuses.length];
+        
+        final localizedCategory = engine.translate('categories.$categoryKey');
+        final localizedItemName = engine.translate('catalog.item');
+        
         final price = (19.99 + (i * 5.50)).toStringAsFixed(2);
         final rating = 3.5 + (i % 3) * 0.5;
         final reviewCount = 10 + (i * 3);
         
         _items.add(Item(
           id: i,
-          title: '$category Item $i',
-          description: 'Premium quality $category item with exceptional features. This product offers outstanding value and performance. Perfect for everyday use and designed to meet your highest expectations.',
-          category: category,
+          title: '$localizedCategory $localizedItemName $i',
+          description: '${engine.translate('catalog.desc_part1')} $localizedCategory ${engine.translate('catalog.desc_part2')}',
+          category: localizedCategory,
           price: double.parse(price),
           rating: rating,
           reviewCount: reviewCount,
           status: status,
-          tags: [category, status, 'Featured'],
+          tags: [localizedCategory, status, 'Featured'],
         ));
       }
     });
   }
 
   void _loadMore() {
-    setState(() {
-      _itemCount += 10;
-      _loadItems();
-    });
+    _itemCount += 10;
+    _loadItems();
   }
 
   String _getLocalizedStatus(String status, LocalizationEngine engine) {
@@ -362,7 +368,7 @@ class _ListScreenState extends State<ListScreen> {
                       children: item.tags.take(2).map((tag) {
                         return Chip(
                           label: Text(
-                            tag,
+                            _getLocalizedTag(tag, engine),
                             style: const TextStyle(fontSize: 10),
                           ),
                           padding: EdgeInsets.zero,
@@ -384,5 +390,18 @@ class _ListScreenState extends State<ListScreen> {
         ),
       ),
     );
+  }
+
+  String _getLocalizedTag(String tag, LocalizationEngine engine) {
+    // Check if tag is a status
+    final statusTranslation = _getLocalizedStatus(tag, engine);
+    if (statusTranslation != tag) return statusTranslation;
+    
+    // Check if tag is a category
+    for (var key in _categories) {
+      if (engine.translate('categories.$key') == tag) return tag; // Already localized
+    }
+    
+    return tag;
   }
 }
