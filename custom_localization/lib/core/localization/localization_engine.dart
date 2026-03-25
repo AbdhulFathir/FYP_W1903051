@@ -1,8 +1,9 @@
 import 'dart:collection';
 import 'dart:convert';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 
-class LocalizationEngine {
+class LocalizationEngine extends ChangeNotifier {
   static final LocalizationEngine _instance = LocalizationEngine._internal();
   factory LocalizationEngine() => _instance;
   LocalizationEngine._internal();
@@ -10,47 +11,75 @@ class LocalizationEngine {
   final LinkedHashMap<String, String> _cache = LinkedHashMap<String, String>();
   final int _maxCacheSize = 100;
   
-  Map<String, dynamic> _currentLanguageData = {};
+  // Flattened map to avoid runtime traversal overhead (Fix #1)
+  Map<String, String> _flattenedData = {};
   String _currentLangCode = 'en';
+  bool _isLoading = false;
+
+  // String Interning Pool (Fix #3)
+  final Set<String> _internPool = {};
 
   String get currentLangCode => _currentLangCode;
+  bool get isLoading => _isLoading;
 
   Future<void> loadLanguage(String langCode) async {
+    _isLoading = true;
+    notifyListeners(); // Notify UI that loading has started (Fix #4)
+
     try {
       final jsonString = await rootBundle.loadString('assets/lang/$langCode.json');
-      _currentLanguageData = json.decode(jsonString);
+      final Map<String, dynamic> rawData = json.decode(jsonString);
+      
+      // Clear previous data
+      _flattenedData = {};
+      _cache.clear();
+      
+      // Flatten and intern (Fix #1 & #3)
+      _flatten(rawData, '');
+      
       _currentLangCode = langCode;
-      _cache.clear(); // Reset cache when language changes
     } catch (e) {
-      print('Error loading language $langCode: $e');
-      // Fallback or keep current
+      debugPrint('Error loading language $langCode: $e');
+    } finally {
+      _isLoading = false;
+      notifyListeners(); // Notify UI that loading is complete (Fix #2 & #4)
     }
+  }
+
+  // Recursive flattening function (Fix #1)
+  void _flatten(Map<String, dynamic> data, String prefix) {
+    data.forEach((key, value) {
+      final String fullKey = prefix.isEmpty ? key : '$prefix.$key';
+      
+      if (value is Map<String, dynamic>) {
+        _flatten(value, fullKey);
+      } else {
+        // Interning logic: ensures identical strings share memory (Fix #3)
+        final String stringValue = value.toString();
+        final String internedValue = _intern(stringValue);
+        _flattenedData[_intern(fullKey)] = internedValue;
+      }
+    });
+  }
+
+  // Simple string interning helper (Fix #3)
+  String _intern(String s) {
+    return _internPool.lookup(s) ?? ((){
+      _internPool.add(s);
+      return s;
+    })();
   }
 
   String translate(String key) {
     // 1. Cache hit
     if (_cache.containsKey(key)) {
-      // Move to end to mark as recently used
       final value = _cache.remove(key);
       _cache[key] = value!;
       return value;
     }
 
-    // 2. Cache miss -> fetch from data
-    // Support nested keys like "home.title"
-    dynamic value = _currentLanguageData;
-    List<String> keys = key.split('.');
-    
-    for (var k in keys) {
-      if (value is Map && value.containsKey(k)) {
-        value = value[k];
-      } else {
-        value = key; // Fallback to key itself if not found
-        break;
-      }
-    }
-
-    String result = value.toString();
+    // 2. Cache miss -> fetch from flattened data (O(1) lookup vs O(N) traversal) (Fix #1)
+    String result = _flattenedData[key] ?? key;
 
     // 3. Store in cache (LRU behavior)
     _addToCache(key, result);
@@ -60,14 +89,13 @@ class LocalizationEngine {
 
   void _addToCache(String key, String value) {
     if (_cache.containsKey(key)) {
-      _cache.remove(key); // refresh order
+      _cache.remove(key); 
     } else if (_cache.length >= _maxCacheSize) {
-      _cache.remove(_cache.keys.first); // LRU removal (oldest)
+      _cache.remove(_cache.keys.first); 
     }
     _cache[key] = value;
   }
   
-  // Prefetching helper for specific keys
   void prefetch(List<String> keys) {
     for (var key in keys) {
       translate(key);

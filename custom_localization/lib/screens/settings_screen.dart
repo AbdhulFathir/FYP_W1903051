@@ -1,6 +1,6 @@
 import 'package:custom_localization/core/localization/localization_engine.dart';
-import 'package:custom_localization/main.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
@@ -22,19 +22,19 @@ class _SettingsScreenState extends State<SettingsScreen> {
     _selectedLanguage = LocalizationEngine().currentLangCode;
   }
 
-  void _onLanguageChanged(String? value) {
-    if (value != null) {
+  void _onLanguageChanged(String? value, LocalizationEngine engine) {
+    if (value != null && !engine.isLoading) {
       setState(() {
         _selectedLanguage = value;
       });
-      MyApp.setLocale(context, value);
+      engine.loadLanguage(value);
     }
   }
 
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
-    final engine = LocalizationEngine();
+    final engine = Provider.of<LocalizationEngine>(context);
 
     return Scaffold(
       body: Container(
@@ -43,7 +43,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
             colors: [
-              colorScheme.primaryContainer.withOpacity(0.3),
+              colorScheme.primaryContainer.withValues(alpha:0.3),
               colorScheme.surface,
             ],
           ),
@@ -151,6 +151,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                             color: colorScheme.onSurfaceVariant,
                           ),
                         ),
+                        trailing: engine.isLoading 
+                          ? const SizedBox(width: 20, height: 20, child: CircularProgressIndicator(strokeWidth: 2))
+                          : null,
                       ),
                       const Divider(height: 1, indent: 72),
                       RadioListTile<String>(
@@ -164,7 +167,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                 vertical: 2,
                               ),
                               decoration: BoxDecoration(
-                                color: Colors.blue.withOpacity(0.1),
+                                color: Colors.blue.withValues(alpha:0.1),
                                 borderRadius: BorderRadius.circular(4),
                               ),
                               child: const Text(
@@ -180,7 +183,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         ),
                         value: 'en',
                         groupValue: _selectedLanguage,
-                        onChanged: _onLanguageChanged,
+                        onChanged: (val) => _onLanguageChanged(val, engine),
                       ),
                       const Divider(height: 1, indent: 72),
                       RadioListTile<String>(
@@ -194,7 +197,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                 vertical: 2,
                               ),
                               decoration: BoxDecoration(
-                                color: Colors.green.withOpacity(0.1),
+                                color: Colors.green.withValues(alpha:0.1),
                                 borderRadius: BorderRadius.circular(4),
                               ),
                               child: const Text(
@@ -210,7 +213,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         ),
                         value: 'si',
                         groupValue: _selectedLanguage,
-                        onChanged: _onLanguageChanged,
+                        onChanged: (val) => _onLanguageChanged(val, engine),
                       ),
                       const Divider(height: 1, indent: 72),
                       RadioListTile<String>(
@@ -224,7 +227,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                 vertical: 2,
                               ),
                               decoration: BoxDecoration(
-                                color: Colors.orange.withOpacity(0.1),
+                                color: Colors.orange.withValues(alpha:0.1),
                                 borderRadius: BorderRadius.circular(4),
                               ),
                               child: const Text(
@@ -240,7 +243,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         ),
                         value: 'ta',
                         groupValue: _selectedLanguage,
-                        onChanged: _onLanguageChanged,
+                        onChanged: (val) => _onLanguageChanged(val, engine),
                       ),
                     ],
                   ),
@@ -348,7 +351,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         secondary: Container(
                           padding: const EdgeInsets.all(8),
                           decoration: BoxDecoration(
-                            color: Colors.blue.withOpacity(0.1),
+                            color: Colors.blue.withValues(alpha:0.1),
                             borderRadius: BorderRadius.circular(8),
                           ),
                           child: const Icon(
@@ -388,7 +391,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         secondary: Container(
                           padding: const EdgeInsets.all(8),
                           decoration: BoxDecoration(
-                            color: Colors.green.withOpacity(0.1),
+                            color: Colors.green.withValues(alpha:0.1),
                             borderRadius: BorderRadius.circular(8),
                           ),
                           child: const Icon(
@@ -428,7 +431,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         secondary: Container(
                           padding: const EdgeInsets.all(8),
                           decoration: BoxDecoration(
-                            color: Colors.purple.withOpacity(0.1),
+                            color: Colors.purple.withValues(alpha:0.1),
                             borderRadius: BorderRadius.circular(8),
                           ),
                           child: const Icon(

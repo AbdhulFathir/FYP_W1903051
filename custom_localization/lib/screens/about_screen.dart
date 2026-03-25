@@ -1,5 +1,6 @@
 import 'package:custom_localization/core/localization/localization_engine.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class AboutScreen extends StatelessWidget {
   const AboutScreen({super.key});
@@ -7,7 +8,7 @@ class AboutScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
-    final engine = LocalizationEngine();
+    final engine = Provider.of<LocalizationEngine>(context);
 
     return Scaffold(
       body: Container(
@@ -16,7 +17,7 @@ class AboutScreen extends StatelessWidget {
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
             colors: [
-              colorScheme.primaryContainer.withOpacity(0.3),
+              colorScheme.primaryContainer.withValues(alpha: 0.3),
               colorScheme.surface,
             ],
           ),
@@ -41,7 +42,7 @@ class AboutScreen extends StatelessWidget {
                     borderRadius: BorderRadius.circular(24),
                     boxShadow: [
                       BoxShadow(
-                        color: colorScheme.primary.withOpacity(0.3),
+                        color: colorScheme.primary.withValues(alpha:0.3),
                         blurRadius: 20,
                         offset: const Offset(0, 10),
                       ),
@@ -54,7 +55,7 @@ class AboutScreen extends StatelessWidget {
                         Container(
                           padding: const EdgeInsets.all(20),
                           decoration: BoxDecoration(
-                            color: Colors.white.withOpacity(0.2),
+                            color: Colors.white.withValues(alpha:0.2),
                             shape: BoxShape.circle,
                           ),
                           child: const Icon(
@@ -79,7 +80,7 @@ class AboutScreen extends StatelessWidget {
                             vertical: 8,
                           ),
                           decoration: BoxDecoration(
-                            color: Colors.white.withOpacity(0.2),
+                            color: Colors.white.withValues(alpha:.2),
                             borderRadius: BorderRadius.circular(20),
                           ),
                           child: Text(
@@ -299,7 +300,7 @@ class AboutScreen extends StatelessWidget {
                         leading: Container(
                           padding: const EdgeInsets.all(8),
                           decoration: BoxDecoration(
-                            color: Colors.blue.withOpacity(0.1),
+                            color: Colors.blue.withValues(alpha:0.1),
                             borderRadius: BorderRadius.circular(8),
                           ),
                           child: const Icon(
@@ -329,7 +330,7 @@ class AboutScreen extends StatelessWidget {
                         leading: Container(
                           padding: const EdgeInsets.all(8),
                           decoration: BoxDecoration(
-                            color: Colors.green.withOpacity(0.1),
+                            color: Colors.green.withValues(alpha:0.1),
                             borderRadius: BorderRadius.circular(8),
                           ),
                           child: const Icon(
@@ -352,7 +353,7 @@ class AboutScreen extends StatelessWidget {
                         leading: Container(
                           padding: const EdgeInsets.all(8),
                           decoration: BoxDecoration(
-                            color: Colors.purple.withOpacity(0.1),
+                            color: Colors.purple.withValues(alpha:0.1),
                             borderRadius: BorderRadius.circular(8),
                           ),
                           child: const Icon(
@@ -408,7 +409,7 @@ class AboutScreen extends StatelessWidget {
       leading: Container(
         padding: const EdgeInsets.all(10),
         decoration: BoxDecoration(
-          color: iconColor.withOpacity(0.1),
+          color: iconColor.withValues(alpha:0.1),
           borderRadius: BorderRadius.circular(10),
         ),
         child: Icon(icon, color: iconColor, size: 24),

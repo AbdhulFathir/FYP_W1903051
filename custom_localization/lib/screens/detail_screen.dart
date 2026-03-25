@@ -1,5 +1,6 @@
 import 'package:custom_localization/core/localization/localization_engine.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../models/item.dart';
 
@@ -11,7 +12,7 @@ class DetailScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
-    final engine = LocalizationEngine();
+    final engine = Provider.of<LocalizationEngine>(context);
 
     final statusColors = {
       'Available': Colors.green,
@@ -28,7 +29,7 @@ class DetailScreen extends StatelessWidget {
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
             colors: [
-              colorScheme.primaryContainer.withOpacity(0.3),
+              colorScheme.primaryContainer.withValues(alpha:0.3),
               colorScheme.surface,
             ],
           ),
@@ -53,7 +54,7 @@ class DetailScreen extends StatelessWidget {
                     borderRadius: BorderRadius.circular(24),
                     boxShadow: [
                       BoxShadow(
-                        color: colorScheme.primary.withOpacity(0.3),
+                        color: colorScheme.primary.withValues(alpha:0.3),
                         blurRadius: 20,
                         offset: const Offset(0, 10),
                       ),
@@ -70,7 +71,7 @@ class DetailScreen extends StatelessWidget {
                               width: 80,
                               height: 80,
                               decoration: BoxDecoration(
-                                color: Colors.white.withOpacity(0.2),
+                                color: Colors.white.withValues(alpha:0.2),
                                 borderRadius: BorderRadius.circular(16),
                               ),
                               child: Center(
@@ -108,7 +109,7 @@ class DetailScreen extends StatelessWidget {
                                       vertical: 6,
                                     ),
                                     decoration: BoxDecoration(
-                                      color: Colors.white.withOpacity(0.2),
+                                      color: Colors.white.withValues(alpha:0.2),
                                       borderRadius: BorderRadius.circular(8),
                                     ),
                                     child: Text(
@@ -146,7 +147,7 @@ class DetailScreen extends StatelessWidget {
                               child: Text(
                                 '(${item.reviewCount} ${engine.translate('detail.customer_reviews')})',
                                 style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                                      color: Colors.white.withOpacity(0.9),
+                                      color: Colors.white.withValues(alpha:0.9),
                                     ),
                                 overflow: TextOverflow.ellipsis,
                                 maxLines: 1,

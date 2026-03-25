@@ -1,5 +1,6 @@
 import 'package:custom_localization/core/localization/localization_engine.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../models/item.dart';
 import 'detail_screen.dart';
@@ -27,7 +28,7 @@ class _ListScreenState extends State<ListScreen> {
   }
 
   void _loadItems() {
-    final engine = LocalizationEngine();
+    final engine = Provider.of<LocalizationEngine>(context, listen: false);
     setState(() {
       for (int i = _items.length + 1; i <= _itemCount; i++) {
         final categoryKey = _categories[i % _categories.length];
@@ -78,7 +79,7 @@ class _ListScreenState extends State<ListScreen> {
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
-    final engine = LocalizationEngine();
+    final engine = Provider.of<LocalizationEngine>(context);
     
     return Scaffold(
       body: Container(
@@ -87,7 +88,7 @@ class _ListScreenState extends State<ListScreen> {
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
             colors: [
-              colorScheme.primaryContainer.withOpacity(0.2),
+              colorScheme.primaryContainer.withValues(alpha:0.2),
               colorScheme.surface,
             ],
           ),
@@ -102,7 +103,7 @@ class _ListScreenState extends State<ListScreen> {
                   color: colorScheme.surface,
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.black.withOpacity(0.05),
+                      color: Colors.black.withValues(alpha:0.05),
                       blurRadius: 10,
                       offset: const Offset(0, 2),
                     ),
@@ -298,7 +299,7 @@ class _ListScreenState extends State<ListScreen> {
                               vertical: 4,
                             ),
                             decoration: BoxDecoration(
-                              color: statusColor.withOpacity(0.1),
+                              color: statusColor.withValues(alpha:0.1),
                               borderRadius: BorderRadius.circular(8),
                             ),
                             child: Text(

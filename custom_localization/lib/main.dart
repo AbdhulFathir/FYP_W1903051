@@ -2,6 +2,7 @@ import 'package:custom_localization/core/localization/localization_engine.dart';
 import 'package:custom_localization/screens/home_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import 'firebase_options.dart';
 
@@ -18,45 +19,39 @@ Future<void> main() async {
     debugPrint("Firebase initialization failed: $e");
   }
 
-  // Initialize Localization Engine with default language
+  // Initialize Localization Engine
   final engine = LocalizationEngine();
   await engine.loadLanguage('en');
 
-  runApp(const MyApp());
+  runApp(
+    ChangeNotifierProvider.value(
+      value: engine,
+      child: const MyApp(),
+    ),
+  );
 }
 
-class MyApp extends StatefulWidget {
+class MyApp extends StatelessWidget {
   const MyApp({super.key});
-
-  static void setLocale(BuildContext context, String newLocale) {
-    _MyAppState? state = context.findAncestorStateOfType<_MyAppState>();
-    state?.changeLanguage(newLocale);
-  }
-
-  @override
-  State<MyApp> createState() => _MyAppState();
-}
-
-class _MyAppState extends State<MyApp> {
-  String _locale = 'en';
-
-  void changeLanguage(String newLocale) async {
-    await LocalizationEngine().loadLanguage(newLocale);
-    setState(() {
-      _locale = newLocale;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Localization Research Project',
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
-      home: const HomeScreen(),
+    // Consumer allows the app to rebuild surgically when the language changes
+    return Consumer<LocalizationEngine>(
+      builder: (context, engine, child) {
+        return MaterialApp(
+          title: 'Localization Research Project',
+          debugShowCheckedModeBanner: false,
+          theme: ThemeData(
+            colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+            useMaterial3: true,
+          ),
+          // Show a loading indicator if the language is still loading
+          home: engine.isLoading 
+            ? const Scaffold(body: Center(child: CircularProgressIndicator()))
+            : const HomeScreen(),
+        );
+      },
     );
   }
 }
