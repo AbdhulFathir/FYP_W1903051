@@ -27,12 +27,7 @@ Future<void> main() async {
       ],
       path: 'assets/translations',
       fallbackLocale: const Locale('en'),
-      child: MultiProvider(
-        providers: [
-          ChangeNotifierProvider(create: (_) => LocaleProvider()),
-        ],
-        child: const MyApp(),
-      ),
+      child: const MyApp(),
     ),
   );
 }
@@ -51,8 +46,7 @@ class MyApp extends StatelessWidget {
       ),
       localizationsDelegates: context.localizationDelegates,
       supportedLocales: context.supportedLocales,
-      // Locale is controlled by Provider and EasyLocalization together.
-      locale: context.watch<LocaleProvider>().locale,
+      locale: context.locale,
       home: const HomeScreen(),
     );
   }

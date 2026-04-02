@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:provider/provider.dart';
-
-import '../providers/locale_provider.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
@@ -20,7 +17,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
-    final selectedLanguage = context.watch<LocaleProvider>().languageCode;
+    final selectedLanguage = context.locale.languageCode;
 
     return Scaffold(
       body: Container(
@@ -168,9 +165,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         groupValue: selectedLanguage,
                         onChanged: (String? value) {
                           if (value == null) return;
-                          final locale = Locale(value);
-                          context.read<LocaleProvider>().setLocale(locale);
-                          context.setLocale(locale);
+                          context.setLocale(Locale(value));
                         },
                       ),
                       const Divider(height: 1, indent: 72),
@@ -203,9 +198,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         groupValue: selectedLanguage,
                         onChanged: (String? value) {
                           if (value == null) return;
-                          final locale = Locale(value);
-                          context.read<LocaleProvider>().setLocale(locale);
-                          context.setLocale(locale);
+                          context.setLocale(Locale(value));
                         },
                       ),
                       const Divider(height: 1, indent: 72),
@@ -238,9 +231,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         groupValue: selectedLanguage,
                         onChanged: (String? value) {
                           if (value == null) return;
-                          final locale = Locale(value);
-                          context.read<LocaleProvider>().setLocale(locale);
-                          context.setLocale(locale);
+                          context.setLocale(Locale(value));
                         },
                       ),
                     ],
