@@ -322,7 +322,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           children: [
                             const Icon(Icons.brightness_auto_rounded, size: 20),
                             const SizedBox(width: 12),
-                            Text(engine.translate('settings.system')),
+                            Expanded(child: Text(engine.translate('settings.system'))),
                           ],
                         ),
                         value: 'system',
@@ -506,11 +506,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
       children: [
         Icon(icon, color: colorScheme.primary, size: 24),
         const SizedBox(width: 8),
-        Text(
-          title,
-          style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                fontWeight: FontWeight.bold,
-              ),
+        Expanded(
+          child: Text(
+            title,
+            style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                  fontWeight: FontWeight.bold,
+                ),
+          ),
         ),
       ],
     );
