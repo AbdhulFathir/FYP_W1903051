@@ -298,7 +298,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           children: [
                             const Icon(Icons.light_mode_rounded, size: 20),
                             const SizedBox(width: 12),
-                            const Text('Light Mode'),
+                            Text(l10n.lightMode),
                           ],
                         ),
                         value: 'light',
@@ -315,7 +315,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           children: [
                             const Icon(Icons.dark_mode_rounded, size: 20),
                             const SizedBox(width: 12),
-                            const Text('Dark Mode'),
+                            Text(l10n.darkMode),
                           ],
                         ),
                         value: 'dark',
@@ -332,7 +332,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           children: [
                             const Icon(Icons.brightness_auto_rounded, size: 20),
                             const SizedBox(width: 12),
-                            const Text('System Default'),
+                            Expanded(child: Text(l10n.systemDefault)),
                           ],
                         ),
                         value: 'system',
@@ -516,11 +516,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
       children: [
         Icon(icon, color: colorScheme.primary, size: 24),
         const SizedBox(width: 8),
-        Text(
-          title,
-          style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                fontWeight: FontWeight.bold,
-              ),
+        Expanded(
+          child: Text(
+            title,
+            style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                  fontWeight: FontWeight.bold,
+                ),
+          ),
         ),
       ],
     );

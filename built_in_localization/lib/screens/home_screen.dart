@@ -212,14 +212,14 @@ class HomeScreen extends StatelessWidget {
   }
 
   Widget _buildNavigationCard(
-    BuildContext context,
-    String title,
-    String subtitle,
-    IconData icon,
-    Color startColor,
-    Color endColor,
-    VoidCallback onTap,
-  ) {
+      BuildContext context,
+      String title,
+      String subtitle,
+      IconData icon,
+      Color startColor,
+      Color endColor,
+      VoidCallback onTap,
+      ) {
     return Material(
       color: Colors.transparent,
       child: InkWell(
@@ -235,7 +235,7 @@ class HomeScreen extends StatelessWidget {
             borderRadius: BorderRadius.circular(20),
             boxShadow: [
               BoxShadow(
-                color: startColor.withOpacity(0.3),
+                color: startColor.withValues(alpha:0.3),
                 blurRadius: 12,
                 offset: const Offset(0, 6),
               ),
@@ -250,7 +250,7 @@ class HomeScreen extends StatelessWidget {
                 Container(
                   padding: const EdgeInsets.all(10),
                   decoration: BoxDecoration(
-                    color: Colors.white.withOpacity(0.2),
+                    color: Colors.white.withValues(alpha:0.2),
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: Icon(icon, size: 32, color: Colors.white),
@@ -260,9 +260,9 @@ class HomeScreen extends StatelessWidget {
                   child: Text(
                     title,
                     style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                        ),
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                    ),
                     textAlign: TextAlign.center,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
@@ -273,9 +273,9 @@ class HomeScreen extends StatelessWidget {
                   child: Text(
                     subtitle,
                     style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                          color: Colors.white.withOpacity(0.9),
-                          fontSize: 11,
-                        ),
+                      color: Colors.white.withValues(alpha:0.9),
+                      fontSize: 11,
+                    ),
                     textAlign: TextAlign.center,
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
