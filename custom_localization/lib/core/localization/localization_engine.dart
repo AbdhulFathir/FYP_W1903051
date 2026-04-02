@@ -2,6 +2,7 @@ import 'dart:collection';
 import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LocalizationEngine extends ChangeNotifier {
   static final LocalizationEngine _instance = LocalizationEngine._internal();
@@ -22,6 +23,14 @@ class LocalizationEngine extends ChangeNotifier {
   String get currentLangCode => _currentLangCode;
   bool get isLoading => _isLoading;
 
+  static const String _prefKey = 'selected_language_code';
+
+  Future<void> init() async {
+    final prefs = await SharedPreferences.getInstance();
+    final savedLang = prefs.getString(_prefKey) ?? 'en';
+    await loadLanguage(savedLang);
+  }
+
   Future<void> loadLanguage(String langCode) async {
     _isLoading = true;
     notifyListeners(); // Notify UI that loading has started (Fix #4)
@@ -38,6 +47,11 @@ class LocalizationEngine extends ChangeNotifier {
       _flatten(rawData, '');
       
       _currentLangCode = langCode;
+
+      // Save to preferences
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setString(_prefKey, langCode);
+
     } catch (e) {
       debugPrint('Error loading language $langCode: $e');
     } finally {

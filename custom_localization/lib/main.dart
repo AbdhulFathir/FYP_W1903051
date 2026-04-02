@@ -19,9 +19,9 @@ Future<void> main() async {
     debugPrint("Firebase initialization failed: $e");
   }
 
-  // Initialize Localization Engine
+  // Initialize Localization Engine and load saved language
   final engine = LocalizationEngine();
-  await engine.loadLanguage('en');
+  await engine.init();
 
   runApp(
     ChangeNotifierProvider.value(
