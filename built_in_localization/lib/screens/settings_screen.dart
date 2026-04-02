@@ -1,5 +1,6 @@
 import 'package:built_in_localization/app_locale_scope.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../l10n/app_localizations.dart';
 
 class SettingsScreen extends StatefulWidget {
@@ -179,10 +180,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         value: 'en',
                         groupValue: _selectedLanguage,
                         onChanged: (String? value) {
-                          setState(() {
-                            _selectedLanguage = value!;
-                          });
-                          _changeLanguage(context, value!);
+                          if (value != null) {
+                            setState(() {
+                              _selectedLanguage = value;
+                            });
+                            _changeLanguage(context, value);
+                          }
                         },
                       ),
                       const Divider(height: 1, indent: 72),
@@ -214,10 +217,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         value: 'si',
                         groupValue: _selectedLanguage,
                         onChanged: (String? value) {
-                          setState(() {
-                            _selectedLanguage = value!;
-                          });
-                          _changeLanguage(context, value!);
+                          if (value != null) {
+                            setState(() {
+                              _selectedLanguage = value;
+                            });
+                            _changeLanguage(context, value);
+                          }
                         },
                       ),
                       const Divider(height: 1, indent: 72),
@@ -249,10 +254,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         value: 'ta',
                         groupValue: _selectedLanguage,
                         onChanged: (String? value) {
-                          setState(() {
-                            _selectedLanguage = value!;
-                          });
-                          _changeLanguage(context, value!);
+                          if (value != null) {
+                            setState(() {
+                              _selectedLanguage = value;
+                            });
+                            _changeLanguage(context, value);
+                          }
                         },
                       ),
                     ],
@@ -554,7 +561,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
     }
   }
 
-  void _changeLanguage(BuildContext context, String languageCode) {
+  void _changeLanguage(BuildContext context, String languageCode) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString('language_code', languageCode);
+    if (!mounted) return;
     AppLocaleScope.of(context)?.setLocale(Locale(languageCode));
   }
 }

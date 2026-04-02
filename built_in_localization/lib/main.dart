@@ -3,12 +3,15 @@ import 'package:built_in_localization/screens/home_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'firebase_options.dart';
 import 'l10n/app_localizations.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  
+  // Initialize Firebase
   try {
     await Firebase.initializeApp(
       options: DefaultFirebaseOptions.currentPlatform,
@@ -18,11 +21,20 @@ Future<void> main() async {
     debugPrint("Firebase initialization failed: $e");
   }
 
-  runApp(const MyApp());
+  // Load saved locale
+  final prefs = await SharedPreferences.getInstance();
+  final String? languageCode = prefs.getString('language_code');
+  Locale? savedLocale;
+  if (languageCode != null) {
+    savedLocale = Locale(languageCode);
+  }
+
+  runApp(MyApp(initialLocale: savedLocale));
 }
 
 class MyApp extends StatefulWidget {
-  const MyApp({super.key});
+  final Locale? initialLocale;
+  const MyApp({super.key, this.initialLocale});
 
   @override
   State<MyApp> createState() => _MyAppState();
@@ -31,6 +43,12 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   /// Current app locale. When null, MaterialApp uses the device locale.
   Locale? _locale;
+
+  @override
+  void initState() {
+    super.initState();
+    _locale = widget.initialLocale;
+  }
 
   void _setLocale(Locale? locale) {
     if (_locale == locale) return;
